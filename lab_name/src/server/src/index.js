@@ -75,7 +75,7 @@ app.post('/login', (req, res) => {
 	console.log(body)
 	//checking in DB and response with rules
 
-	res.json({'auth': 'admin'})
+	res.json({'auth': 'admin', name: 'Ivan Kotov'})
 	// res.json({'auth': 'user'})
 })
 

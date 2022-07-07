@@ -8,6 +8,7 @@ import {
 import { useDispatch } from 'react-redux';
 import classes from '../styles/App.module.css'
 import Loader from './Loader';
+import ArticleCreator from './ArticleCreator';
 import MainApp from './MainApp';
 import { setArticlesRedux } from '../data/articlesReducer';
 import LoginPage from './LoginPage';
@@ -18,7 +19,7 @@ function App() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    navigate('/login', {replace: true})
+    // navigate('/login', {replace: true})
     async function fetchData(){
       let res = await fetch('http://localhost:5000')
       res = await res.json()
@@ -33,6 +34,7 @@ function App() {
         <Routes>
           <Route exact={true} path="/login" element={<LoginPage/>} />
           <Route exact={true} path="/" element={<MainApp />} />
+          <Route exact={true} path="/create" element={ <ArticleCreator />} />
         </Routes>
       {/* {!articles 
       ? <Loader />

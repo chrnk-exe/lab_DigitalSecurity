@@ -24,7 +24,7 @@ const LoginPage = () => {
         res = await res.json()
         console.log(res)
         if(res['auth'])navigator('/', {replace: true})
-        res['auth'] === 'admin' ? dispatch(setAdmin()) : dispatch(setUser())
+        res['auth'] === 'admin' ? dispatch(setAdmin(res['name'])) : dispatch(setUser(res['name']))
     }
 
   return (
