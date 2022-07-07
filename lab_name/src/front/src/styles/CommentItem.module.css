@@ -1,0 +1,21 @@
+.CommentItem {
+    width: 85%;
+    margin-top: 15px ;
+    background-color: gainsboro;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.names {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.content {
+    margin-left: 15px;
+}
