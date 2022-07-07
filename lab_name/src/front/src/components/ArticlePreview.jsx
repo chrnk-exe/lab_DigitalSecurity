@@ -1,13 +1,23 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import history from 'history/browser'
+// import { useDispatch } from 'react-redux/es/exports'
+// import { setArticleState } from '../data/articlesReducer'
+// import history from 'history/browser'
 import classes from '../styles/ArticlePreview.module.css'
 
 const ArticlePreview = ({title, body, id}) => {
     const location = useLocation()
     const navigate = useNavigate()
-
-    const goToArticleHandler = () => {
+    // const dispatch = useDispatch()
+    const goToArticleHandler = async () => {
+        // let resp = await fetch(`http://localhost:5000/api/posts?id=${id}`)
+        // if(resp.status === 200){
+        //     resp = await resp.json()
+        //     dispatch(setArticleState({
+        //         articles: resp.data,
+        //         comments: resp.comments
+        //     }))
+        // }
         navigate(`/posts/${id}`, {replace: true, state: {id}})
     }
 

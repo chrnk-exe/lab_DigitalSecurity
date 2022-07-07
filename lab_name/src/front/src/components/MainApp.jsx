@@ -39,8 +39,6 @@ const MainApp = () => {
             </header>
             <main>
                 {articles.map(article => <ArticlePreview title={article.title} body={article.body} key={article.id} id={article.id}/>)}
-
-                
             </main>
         </section>
     </main>
