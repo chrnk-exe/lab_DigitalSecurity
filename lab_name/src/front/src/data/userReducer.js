@@ -1,6 +1,7 @@
 let initialState = {
     user: 'admin', //'unknown',
     name: 'unknown',
+    id: 1
 }
 
 const SET_USER = 'setUser'
@@ -10,9 +11,9 @@ const SET_USER_NAME = 'setUserName'
 export const userReducer = (state = initialState, action) => {
     switch(action.type){
         case SET_USER:
-            return {...state, user: 'user', name: action.payload}
+            return {...state, user: 'user', name: action.payload.name, id: action.payload.id}
         case SET_ADMIN:
-            return {...state, user: 'admin', name: action.payload}
+            return {...state, user: 'admin', name: action.payload.name, id: action.payload.id}
         case SET_USER_NAME:
             return {...state, name: action.payload}
         default:
