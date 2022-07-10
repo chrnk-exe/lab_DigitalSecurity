@@ -23,15 +23,17 @@ const LoginPage = () => {
             body: JSON.stringify(form)
         })
         res = await res.json()
-        console.log(res)
-        if(res['status'])navigator('/', {replace: true})
-        res['isadmin'] ? dispatch(setAdmin({name: res['name'], id: res['userid']})) : dispatch(setUser({name: res['name'], id: res['userid']}))
-        storage.setItem('user', JSON.stringify({
-            name: res['name'],
-            id: res['userid'],
-            user: res['isadmin'] ? 'admin' : 'user'
-        }))
-        console.log(storage)
+        if(res['auth']){
+            navigator('/', {replace: true})
+            res['isadmin'] ? dispatch(setAdmin({name: res['name'], id: res['userid']})) : dispatch(setUser({name: res['name'], id: res['userid']}))
+            storage.setItem('user', JSON.stringify({
+                name: res['name'],
+                id: res['userid'],
+                user: res['isadmin'] ? 'admin' : 'user'
+            }))
+        } else {
+            alert(res['info'])
+        }
     }
 
   return (

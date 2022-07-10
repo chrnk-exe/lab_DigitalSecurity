@@ -24,7 +24,7 @@ function App() {
     window.addEventListener('popstate', () => {
       navigator('/')
     })
-    console.log(window.sessionStorage)
+    // console.log(window.sessionStorage)
     if(id === -1)navigate('/login', {replace: true})
   }, [])
 

@@ -27,7 +27,7 @@ const ArticleCreator = () => {
             },
             body: JSON.stringify(requestBody)
         })
-        console.log(JSON.stringify(requestBody))
+        // console.log(JSON.stringify(requestBody))
     }
 
     if(user !== 'admin') {

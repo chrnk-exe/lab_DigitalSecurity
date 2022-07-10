@@ -17,7 +17,9 @@ const MainApp = () => {
 
     useEffect(() => {
         async function fetchData(){
-            let res = await fetch('http://localhost:5000/')
+            let res = await fetch('http://localhost:5000/articles', {
+                method: 'GET',
+            })
             res = await res.json()
             console.log(res)
             dispatch(setArticlesRedux(res.articles))
