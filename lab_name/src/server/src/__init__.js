@@ -26,6 +26,14 @@ const main = async () => {
 			body text,
 			articleid INT
 		)`)
+	return
+	result = await pool.query(`
+		INSERT INTO users (login, userpassword, isadmin) VALUES ('Ivan Kit', '1234567qwe', TRUE)
+		`)
+	result = await pool.query(`
+		INSERT INTO articles (title, body, date_of_creation, creatorid, comments) VALUES ('First article!', 'Hello world!
+		Its my first article on hacktory.lab!', 2022-07-10, 1, '[]')
+		`)
 }
 
 module.exports.init = main

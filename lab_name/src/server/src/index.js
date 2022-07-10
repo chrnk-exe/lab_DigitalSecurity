@@ -1,14 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-
+const init = require('./__init__').main
 const apiroutes = require('./api')
 const api = require('./dbapi')
-
-const mockPosts = require('./mockup').mockPosts;
-const mockComments = require('./mockup').mockComments;
-const updateComments = require('./mockup').updateComments
-
-const payload = '{"constructor": {"prototype": {"flag": true}}}'
 
 function randomInteger(min, max) {
     let rand = min + Math.random() * (max + 1 - min);
