@@ -26,7 +26,6 @@ app.use(express.static(path.resolve(__dirname, '../../build')))
 app.use('/api', apiroutes);
 app.get('/articles', async (req, res) => {
 	let articles = await api.getAllArticles()
-	console.log('"/articles	" route used!')
 	let response = {articles}
 	console.log(response)
 	res.set('Content-Type', 'application/json')
@@ -36,7 +35,6 @@ app.get('/articles', async (req, res) => {
 app.post('/login', async (req, res) => {
 	let {login, password} = req.body
 	let result = await api.checkUser(login, password)
-	console.log("'/login' route used!")
 	res.json(result)
 })
 

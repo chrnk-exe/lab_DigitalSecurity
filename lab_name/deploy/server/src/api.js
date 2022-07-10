@@ -27,7 +27,6 @@ router.get('/posts', async function(req, res) {
 router.get('/userisadmin', async (req, res) => {
 	let id = req.query['id']
 	let answer = await api.checkUserRules(id)
-	console.log('/userisadmin')
 	res.set('Content-Type', 'application/json')
 	res.json(answer)
 })
@@ -35,7 +34,6 @@ router.get('/userisadmin', async (req, res) => {
 router.post('/comment', async function(req, res) {
 	let {id, body, postId} = req.body
 	let result = await api.addComment(id, body, postId)
-	console.log('/comment')
 	res.json(result)
 });
 
@@ -43,7 +41,6 @@ router.post('/comment', async function(req, res) {
 router.post('/create', async (req, res) => {
   	const {userid, title, body, date} = req.body
   	const userIsAdmin = await api.checkUserRules(userid)
-  	console.log('/create')
   	if(userIsAdmin){
   		// lodash vulnerable here!
   		const info = {userid, title, body}
