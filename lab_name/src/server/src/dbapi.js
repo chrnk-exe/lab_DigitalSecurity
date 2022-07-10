@@ -31,6 +31,7 @@ async function checkUser(login, password){
 		let { userid, userpassword, isadmin } = userInfo
 		if(password === userpassword){
 			result = {
+				'name': login,
 				'status': true,
 				'auth': true,
 				'isadmin' : isadmin,
@@ -64,14 +65,27 @@ async function registerNewUser(login, password){
 
 async function getAllArticles(){
 	const articles = await pool.query("SELECT * FROM articles")
-	return await articles.rows
+	const _articles = articles.rows.sort(byField('articleid'))
+	function byField(field) {
+	  return (a, b) => a[field] < b[field] ? 1 : -1;
+	}
+	return await _articles
 }
 
 async function getComments(id){
 	const article = await pool.query(`SELECT comments FROM articles WHERE articleid = ${id}`)
 	let commentsList = JSON.parse(article.rows[0].comments)
-	const comments = await pool.query(`SELECT * FROM comments WHERE commentid in (${commentsList.join(',')})`)
-	return comments.rows
+	if(commentsList.length > 0) {
+		const commentsPool = await pool.query(`SELECT * FROM comments WHERE commentid in (${commentsList.join(',')})`)
+		const comments = commentsPool.rows
+		let _comments = comments.map(comment => comment.userid)
+		let names = await pool.query(`SELECT userid, login FROM users WHERE userid in (${_comments.join(',')})`)
+		names = names.rows
+		_comments = comments.map(comment => ({...comment, name: names.find(name => name.userid == comment.userid).login}))
+		return _comments
+	} else {
+		return []
+	}
 }
 
 getComments(1)
@@ -82,7 +96,6 @@ async function addComment(userID, body, articleID) {
 		body,
 		articleid: articleID
 	} 
-
 	let result = await pool.query(`INSERT INTO comments	(userid, body, articleid) VALUES (${userID}, '${body}', ${articleID})`)
 	if(!result.rowCount){
 		return {
@@ -125,13 +138,12 @@ async function addComment(userID, body, articleID) {
 	}
 }
 
-async function addArticle(userID, title, body){
-	let date = new Date()
-	date = [date.getFullYear(), date.getMonth()+1, date.getDate()].join('-')
+async function addArticle(info){
+	const {userid, title, body, year, month, day} = info 
 	const result = await pool.query(
 		`INSERT	INTO articles (title, body, date_of_creation, creatorid, comments) 
-		VALUES ('${title}', '${body}', '${date}', ${userID}, '[]')`)
-	console.log(result)
+		VALUES ('${title}', '${body}', '${year}-${month}-${day}', ${userid}, '[]')`)
+	// console.log(result)
 }
 
 async function getArticle(ID){
@@ -149,9 +161,16 @@ async function getArticle(ID){
 	}
 }
 
+const checkUserRules = async (id) => {
+	const result = await pool.query(`SELECT isadmin FROM users WHERE userid = ${id}`)
+	const user = result.rows[0]
+	return user.isadmin
+}
+
 module.exports.addArticle = addArticle
 module.exports.addComment = addComment	
 module.exports.checkUser = checkUser		
 module.exports.getAllArticles = getAllArticles	
 module.exports.getComments = getComments
 module.exports.getArticle = getArticle
+module.exports.checkUserRules = checkUserRules

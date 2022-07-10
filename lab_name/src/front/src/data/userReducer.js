@@ -1,7 +1,14 @@
-let initialState = {
-    user: 'admin', //'unknown',
+let storage = JSON.parse(window.sessionStorage.getItem('user'))
+
+let initialState = storage === null ? {
+    user: 'user', //'unknown',
     name: 'unknown',
-    id: 1
+    id: -1
+}
+: {
+    user: storage.user, //'unknown',
+    name: storage.name,
+    id: storage.id
 }
 
 const SET_USER = 'setUser'

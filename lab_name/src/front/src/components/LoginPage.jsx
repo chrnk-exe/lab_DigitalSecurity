@@ -13,6 +13,7 @@ const LoginPage = () => {
     const dispatch = useDispatch()
 
     const authorizationHandler = async (e) => {
+        const storage = window.sessionStorage
         e.preventDefault()
         let res = await fetch('http://localhost:5000/login', {
             method: 'POST',
@@ -23,8 +24,14 @@ const LoginPage = () => {
         })
         res = await res.json()
         console.log(res)
-        if(res['auth'])navigator('/', {replace: true})
-        res['auth'] === 'admin' ? dispatch(setAdmin({name: res['name'], id: res['id']})) : dispatch(setUser({name: res['name'], id: res['id']}))
+        if(res['status'])navigator('/', {replace: true})
+        res['isadmin'] ? dispatch(setAdmin({name: res['name'], id: res['userid']})) : dispatch(setUser({name: res['name'], id: res['userid']}))
+        storage.setItem('user', JSON.stringify({
+            name: res['name'],
+            id: res['userid'],
+            user: res['isadmin'] ? 'admin' : 'user'
+        }))
+        console.log(storage)
     }
 
   return (

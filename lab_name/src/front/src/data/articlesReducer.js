@@ -1,7 +1,9 @@
+let storage = JSON.parse(window.sessionStorage.getItem('articles'))
+
 let initialState = {
-    articles: [],
+    articles: storage === null ? [] : storage,
     currentArticle: {},
-    comments: []
+    comments: undefined
 }
 
 const SET_ARTICLES = 'setArticles'

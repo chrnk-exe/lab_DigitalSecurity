@@ -1,10 +1,16 @@
 .articlePage {
-    height: 100%;
-    width: 100%;
     display: grid;
     grid-template-columns: 13fr 4fr;
     gap: 30px;
-    margin: 5%;
+    height: 100%;
+    width: 100%;
+    padding: 5%;
+    /* z-index: 1; */
+}
+
+.greenSpan {
+    color:rgb(69, 231, 177);
+    font-weight: 700;
 }
 
 .articleContainer {
@@ -24,7 +30,7 @@
     width: 100%;
     border-bottom: 4px dotted aquamarine;
     box-sizing: border-box;
-
+    margin-bottom: 10px;
 }
 
 .suggestedPosts {
@@ -56,4 +62,8 @@ h1, h2, h3, h4, p {
     border: 1px dashed aqua;
     color: black;
     font-size: large;
+}
+
+pre {
+    font-size: 1.2em;
 }

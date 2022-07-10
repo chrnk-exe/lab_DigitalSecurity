@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const mergeFn = require('lodash').defaultsDeep;
 
 const apiroutes = require('./api')
 const api = require('./dbapi')
@@ -11,20 +10,10 @@ const updateComments = require('./mockup').updateComments
 
 const payload = '{"constructor": {"prototype": {"flag": true}}}'
 
-function check() {
-    mergeFn({}, JSON.parse(payload));
-    if (({})[`flag`] === true) {
-        console.log(`Vulnerable to Prototype Pollution via ${payload}`);
-    }
-}
-
 function randomInteger(min, max) {
     let rand = min + Math.random() * (max + 1 - min);
     return Math.floor(rand);
 }
-
-
-check();
 
 const app = express()
 const port = 5000
@@ -36,8 +25,8 @@ app.use('/api', apiroutes);
 app.get('/', async (req, res) => {
 	let articles = await api.getAllArticles()
 	let response = {articles}
-	res.set("Content-Type", "application/json")
-  	res.json(response)
+	// res.set("Content-Type", "application/json")
+  res.json(response)
 })
 
 app.post('/login', async (req, res) => {

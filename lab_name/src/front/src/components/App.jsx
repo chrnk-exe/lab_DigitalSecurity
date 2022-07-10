@@ -5,7 +5,7 @@ import {
   Navigate,
   useNavigate
 } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import classes from '../styles/App.module.css'
 import Loader from './Loader';
 import ArticleCreator from './ArticleCreator';
@@ -13,22 +13,25 @@ import MainApp from './MainApp';
 import { setArticlesRedux } from '../data/articlesReducer';
 import LoginPage from './LoginPage';
 import MyArticle from './MyArticle';
+import backArrow from '../assets/back.svg'
 
 function App() {
   const articles = useSelector(state => state.articles.articles)
-  const dispatch = useDispatch()
+  const id = useSelector(state => state.user.id)
   const navigate = useNavigate()
 
   useEffect(() => {
-    // navigate('/login', {replace: true})
-    async function fetchData(){
-      let res = await fetch('http://localhost:5000')
-      res = await res.json()
-      console.log(res)
-      dispatch(setArticlesRedux(res.articles))
-    }
-    fetchData()
+    window.addEventListener('popstate', () => {
+      navigator('/')
+    })
+    console.log(window.sessionStorage)
+    if(id === -1)navigate('/login', {replace: true})
   }, [])
+
+  const logout = () => {
+    window.sessionStorage.clear()
+    window.location.reload()
+  }
 
   return (
     <div className={classes.App}>
@@ -37,13 +40,11 @@ function App() {
           <Route exact={true} path="/" element={<MainApp />} />
           <Route exact={true} path="/create" element={ <ArticleCreator />} />
           {
-            articles.map(article => <Route key={article.id} path={`/posts/${article.id}`} element={ <MyArticle id={article.id}/>}></Route>)
+            articles.map((article, index) => <Route key={index} path={`/posts/${article.articleid}`} element={ <MyArticle id={article.articleid}/>}></Route>)
           }
         </Routes>
-      {/* {!articles 
-      ? <Loader />
-      : <MainApp />
-      } */}
+        <button onClick={() => navigate('/', {replace: true})} className={classes.backButton} disabled={id === -1}> <img src={backArrow} height={35} width={35} alt=''/>Back</button>
+        <button style={id === -1 ? {display: 'none'} : null} onClick={logout} className={classes.backButton + ' ' + classes.logout} disabled={id === -1}>Log out</button>
     </div>
   );
 }

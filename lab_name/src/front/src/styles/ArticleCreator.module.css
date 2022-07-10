@@ -1,0 +1,27 @@
+.title {
+    font-size: 1.1em;
+    padding: 6px 12px;
+    border-radius: 2px;
+    border: 2px solid black;
+    outline: none;
+    transition: all .2s ease-in-out;
+}
+
+.title:hover {
+    border-radius: 5px;
+    border-color: rgb(221, 54, 54);
+    border-width: 2px;
+}
+
+.title:focus {
+    border-radius: 5px;
+    border-color: rgb(54, 221, 165);
+    border-width: 2px;
+}
+
+.body {
+    font-size: 1.3em;
+    box-sizing: border-box;
+    padding: 5px;
+    border-radius: 5px;
+}

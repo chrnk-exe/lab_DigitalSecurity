@@ -1,19 +1,30 @@
 import React, {useEffect} from 'react'
-import { useSelector } from 'react-redux/es/exports'
+import { useSelector, useDispatch } from 'react-redux/es/exports'
 import { Route, useNavigate, useLocation } from 'react-router-dom'
 import classes from '../styles/MainApp.module.css'
 import Loader from './Loader'
 import adminPic from '../assets/admin.jpg'
 import userPic from '../assets/user.jpg'
 import ArticlePreview from './ArticlePreview'
-import MyArticle from './MyArticle'
+import { setArticlesRedux } from '../data/articlesReducer'
 
 const MainApp = () => {
     const articles = useSelector(state => state.articles.articles)
     // console.log(articles)
     const userInfo = useSelector(state => state.user)
+    const dispatch = useDispatch()
     const navigator = useNavigate()
-    const location = useLocation()
+
+    useEffect(() => {
+        async function fetchData(){
+            let res = await fetch('http://localhost:5000/')
+            res = await res.json()
+            console.log(res)
+            dispatch(setArticlesRedux(res.articles))
+            window.sessionStorage.setItem('articles', JSON.stringify(res.articles))
+          }
+          fetchData()
+    }, [])
 
     const createArticleHandler = e => {
         e.preventDefault()
@@ -38,7 +49,9 @@ const MainApp = () => {
                 <h1>{'My Blog'}</h1>
             </header>
             <main>
-                {articles.map(article => <ArticlePreview title={article.title} body={article.body} key={article.id} id={article.id}/>)}
+                {articles.length === 0
+                ? <Loader />
+                : articles.map((article, index) => <ArticlePreview title={article.title} body={article.body} key={article.articleid} id={article.articleid} date={article.date_of_creation}/>)}
             </main>
         </section>
     </main>

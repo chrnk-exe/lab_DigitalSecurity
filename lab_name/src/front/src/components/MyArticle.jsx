@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux/es/exports'
+import Loader from './Loader'
 
 import classes from '../styles/MyArticle.module.css'
 import commentItemStyles from '../styles/CommentItem.module.css'
@@ -18,8 +19,14 @@ const MyArticle = ({id}) => {
     const { currentArticle, comments } = useSelector(state => state.articles)
     const userIsAdmin = useSelector(state => state.user.user) === 'admin'
     const userName = useSelector(state => state.user.name)
+    const userid = useSelector(state => state.user.id)
 
     const [comment, setComment] = useState('')
+
+    const formatDate = (date) => {
+      let ldate = new Date(date)
+      return [ldate.getFullYear(), ldate.getMonth()+1, ldate.getDate()].join('-')
+  }
 
     const sendCommentHandler = (e) => {
       e.preventDefault()
@@ -29,16 +36,12 @@ const MyArticle = ({id}) => {
         headers: {
           'Content-Type':'application/json'
         },
-        body: JSON.stringify({name: userName, admin: userIsAdmin, body: comment, 'postId': id, 'id': randId})
+        body: JSON.stringify({name: userName, admin: userIsAdmin, body: comment, 'postId': id, 'id': userid})
       })
-      dispatch(setComments([...comments, {'postId': id, id: randId, body: comment, name: userName}]))
+      dispatch(setComments([...comments, {'articleid': id, id: randId, body: comment, name: userName}]))
     }
 
     useEffect(() => {
-      window.onpopstate = () => {
-        navigator('/')
-      }
-
       // console.log(id)
       const fetchData = async (id) => {
         let resp = await fetch(`http://localhost:5000/api/posts?id=${id}`)
@@ -60,7 +63,7 @@ const MyArticle = ({id}) => {
           <h1>{currentArticle?.title}</h1>
         </header>
         <main>
-          <p>Date of creation: {currentArticle?.date} / created by <span className={classes.greenSpan}>Ivan Kotov</span></p>
+          <p>Date of creation: {formatDate(currentArticle?.date_of_creation)} / created by <span className={classes.greenSpan}>Ivan Kotov</span></p>
           <div>
             <pre>
               {currentArticle?.body}
@@ -72,7 +75,9 @@ const MyArticle = ({id}) => {
             Comments
           </header>
           <div className={classes.comments}>
-            {comments.map((comment, index) => <CommentItem key={index} name={comment.name} email={comment.email} body={comment.body} />)}
+            {comments 
+            ? comments.map((comment, index) => <CommentItem key={index} name={comment.name} email={comment.email} body={comment.body} />)
+            : <Loader />}
           </div>
           <div className={classes.commentArea}>
             Leave your comment here!

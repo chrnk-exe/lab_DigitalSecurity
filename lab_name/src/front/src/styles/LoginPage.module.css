@@ -32,6 +32,23 @@
     margin-top: 15px;
 }
 
+.formInput {
+    font-size: large;
+    padding: 10px 15px; 
+    margin-top: 5px;
+    outline: none;
+    border: none;
+    border-radius: 0px 5px 5px 0px;
+    transition: 0.2s linear;
+    background-color: #E2E1E0;
+    width: 88%;
+}
+
+.formInput:focus {
+    transform: translateX(-2px);
+    border-radius: 5px;
+}
+
 .inputContainer input {
     font-size: large;
     padding: 10px 15px; 

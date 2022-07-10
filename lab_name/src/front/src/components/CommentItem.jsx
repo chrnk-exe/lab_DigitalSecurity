@@ -4,7 +4,7 @@ import adminPic from '../assets/admin.jpg'
 import userPic from '../assets/user.jpg'
 import flagHandler from '../assets/flagHandler'
 
-const CommentItem = ({name, email, body}) => {
+const CommentItem = ({name, body}) => {
   flagHandler(body)
   return (
     <div className={classes.CommentItem}>
