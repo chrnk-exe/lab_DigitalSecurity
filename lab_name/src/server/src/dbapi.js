@@ -1,182 +1,165 @@
-// const pool = require('./db')
+const sequelize = require('./db')
+const { Users, Articles, Comments } = require('./models')
 
-const { Pool } = require('pg')
-
-const pool = new Pool({
-	user: 'postgres',
-	password: 'qwerty',
-	database: 'AwesomeBlog',
-	host: 'localhost',
-	port: '5432',
-})
-
-async function checkUser(login, password){
-	const user = await pool.query(`SELECT * FROM users WHERE login = '${login}'`)
-	let result
-	if(user.rows.length === 0){
-		if(registerNewUser(login, password)){
-			let userid = await pool.query(`SELECT userid FROM users WHERE login = '${login}'`)
-			userid = userid.rows[0].userid
-			result = {
-				'status': true,
-				'info': 'new user',
-				'name': login,
-				'password': password,
-				'isadmin': false,
-				'userid':userid
-			}
-			// console.log(result)
-			return result
-		} else {
-			result = {
-				'status': false,
-				'info': 'registration failed'
-			}
-			// console.log(result)
-			return result
-		}
-	} else {
-		let userInfo = user.rows[0]
-		let userLogin = userInfo.login
-		let { userid, userpassword, isadmin } = userInfo
-		if(password === userpassword){
-			result = {
-				'name': login,
-				'status': true,
-				'auth': true,
-				'isadmin' : isadmin,
-				'userid': userid
-			}
-			// console.log(result)
-			return result
-		} else {
-			result = {
-				'status': true,
-				'auth': false,
-				'info': 'incorrect password',
-				'userid': userid
-
-			}
-			// console.log(result)
-			return result
-		}
-	}
-
+const toPlain = res => {
+    if(Array.isArray(res)) return res.map(el => el.get({plain: true}))
+    else return res.get({plain: true})
 }
 
+async function checkUser(userLogin, password){
+    const users = Users.findAll({
+        where: {
+            login: userLogin
+        }
+    }).then(toPlain)
+    if((await users).length === 0){
+        const newUser = await registerNewUser(userLogin, password).then(toPlain)
+        const {login, userid, userpassword, isadmin} = await newUser
+        return {
+            status: true,
+            auth: true,
+            info: 'New user',
+            name: login,
+            password: userpassword,
+            isadmin,
+            userid
+        }
+    } else if( (await users).length > 1) {
+        return {
+            status: false,
+            info: 'Duplicate user'
+        }
+    } else {
+        const user = (await users)[0]
+        if(user.userpassword === password) {
+            return {
+                status: true,
+                auth: true,
+                name: userLogin,
+                password: user.userpassword,
+                isadmin: user.isadmin,
+                userid: user.userid
+            }
+        } else {
+            return {
+                status: true,
+                auth: false,
+                info: 'Incorrect password'
+            }
+        }
+    }
+}
+
+checkUser('Loxxxxxx', '12345')
+
 async function registerNewUser(login, password){
-	try {
-		const newUser = await pool.query(`INSERT INTO users (login, userpassword, isadmin) VALUES ('${login}', '${password}', false)`)
-		return true
-	} catch {
-		return false
-	}
+    const newUser = await Users.create({
+        login: login,
+        userpassword: password,
+        isadmin: false
+    })
+    return newUser
 }
 
 async function getAllArticles(){
-	const articles = await pool.query("SELECT * FROM articles")
-	const _articles = articles.rows.sort(byField('articleid'))
-	function byField(field) {
-	  return (a, b) => a[field] < b[field] ? 1 : -1;
-	}
-	return await _articles
+    const articles = Articles.findAll({
+        order: [
+            ['articleid', 'ASC']
+        ]
+    }).then(toPlain)
+    return articles
 }
 
-// getAllArticles().then(res => console.log(res))
-
-async function getComments(id){
-	const article = await pool.query(`SELECT comments FROM articles WHERE articleid = ${id}`)
-	let commentsList = JSON.parse(article.rows[0].comments)
+async function getComments(articleid){
+	let article = Articles.findAll({
+        where: {
+            articleid
+        },
+        attributes: ['comments']
+    }).then(toPlain)
+    article = await article
+	let commentsList = JSON.parse(article[0].comments)
 	if(commentsList.length > 0) {
-		const commentsPool = await pool.query(`SELECT * FROM comments WHERE commentid in (${commentsList.join(',')})`)
-		const comments = commentsPool.rows
-		let _comments = comments.map(comment => comment.userid)
-		let names = await pool.query(`SELECT userid, login FROM users WHERE userid in (${_comments.join(',')})`)
-		names = names.rows
-		_comments = comments.map(comment => ({...comment, name: names.find(name => name.userid == comment.userid).login}))
-		return _comments
+        const commentsPool = Comments.findAll({
+            where: {
+                commentid: commentsList
+            }
+        }).then(toPlain)
+        let useridComments = (await commentsPool).map(comment => comment.userid)
+        let names = await Users.findAll({
+            where: {
+                userid: useridComments
+            }, 
+            attributes: ['userid', 'login']
+        }).then(toPlain)
+        const comments = (await commentsPool).map(comment => ({...comment, name: names.find(name => name.userid == comment.userid).login}))
+        return comments
 	} else {
 		return []
 	}
 }
 
-getComments(1)
+// getComments(1).then(res => console.log(res))
 
-async function addComment(userID, body, articleID) {
-	let newComment = {
-		userid: userID,
-		body,
-		articleid: articleID
-	} 
-	let result = await pool.query(`INSERT INTO comments	(userid, body, articleid) VALUES (${userID}, '${body}', ${articleID})`)
-	if(!result.rowCount){
-		return {
-			'status': false,
-			'info': 'something went wrong'
-		}
-	}
-	let commentPK = await pool.query(`SELECT commentid FROM comments WHERE userid = ${userID} ORDER by commentid DESC LIMIT 1`)
-	let commentID 
-	try {
-		commentID = commentPK.rows[0].commentid
-	} catch {
-		return {
-			'status': false,
-			'info': 'something went wrong'
-		}
-	}
-	result = await pool.query(`SELECT comments FROM articles WHERE articleid = ${articleID}`)
-	let comments
-	try {
-		comments = JSON.parse(result.rows[0].comments)
-	} catch {
-		return {
-			'status': false,
-			'info': 'incorrect articleID'
-		}
-	}
-	comments.push(commentID)
-	comments = JSON.stringify(comments)
-	result = await pool.query(`UPDATE articles SET comments	= '${comments}' WHERE articleid	= ${articleID}`)
-	if(!result.rowCount){
-		return {
-			'status': false,
-			'info': 'incorrect articleID'
-		}
-	} else {
-		return {
-			'status': true
-		}
-	}
+async function addComment(userid, body, articleid){
+    const newComment = await Comments.create({
+        userid,
+        body,
+        articleid
+    })
+    console.log(newComment.commentid)
+    const articel = await Articles.findAll({
+        where: {
+            articleid
+        }
+    })
+    let comments = JSON.parse(articel[0].comments)
+    comments.push(newComment.commentid)
+    articel[0].comments = JSON.stringify(comments)
+    articel[0].save()
 }
 
-async function addArticle(info){
-	const {userid, title, body, year, month, day} = info 
-	const result = await pool.query(
-		`INSERT	INTO articles (title, body, date_of_creation, creatorid, comments) 
-		VALUES ('${title}', '${body}', '${year}-${month}-${day}', ${userid}, '[]')`)
-	// console.log(result)
+addComment(1, 'VERY COOL ARTICLE BRO!', 1).then(() => console.log('comment send'))
+
+async function addArticle(info) {
+    const {userid, title, body, year, month, day} = info 
+    const date = new Date(`${year}, ${month}, ${day+1}`)
+    Articles.create({
+        creatorid: userid,
+        title,
+        body,
+        comments: '[]',
+        date_of_creation: date
+    })
 }
 
-async function getArticle(ID){
-	let article = await pool.query(`SELECT * FROM articles WHERE articleid = ${ID}`)
-	if(article.rows[0]){
-		return {
-			'status': true,
-			'data': article.rows[0]
-		}
-	} else {
-		return {
-			'status': false,
-			'info': 'article doesnt exist'
-		}
-	}
-}
+async function getArticle(articleid){
+    const article = await Articles.findAll({
+        where: {
+            articleid
+        }
+    })
+    if(article.length){
+        return {
+            status: true,
+            data: article[0].get({plain: true})
+        }
+    } else {
+        return {
+            'status': false,
+            'info': 'article doesnt exist'
+        }
+    }
+} 
 
-const checkUserRules = async (id) => {
-	const result = await pool.query(`SELECT isadmin FROM users WHERE userid = ${id}`)
-	const user = result.rows[0]
-	return user.isadmin
+
+const checkUserRules = async (userid) => {
+	const result = await Users.findAll({
+        where: {
+            userid
+        }
+    })
+	return result[0].getDataValue('isadmin')
 }
 
 module.exports.addArticle = addArticle
