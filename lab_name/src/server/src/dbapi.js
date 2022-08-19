@@ -1,4 +1,14 @@
-const pool = require('./db')
+// const pool = require('./db')
+
+const { Pool } = require('pg')
+
+const pool = new Pool({
+	user: 'postgres',
+	password: 'qwerty',
+	database: 'AwesomeBlog',
+	host: 'localhost',
+	port: '5432',
+})
 
 async function checkUser(login, password){
 	const user = await pool.query(`SELECT * FROM users WHERE login = '${login}'`)
@@ -10,7 +20,7 @@ async function checkUser(login, password){
 			result = {
 				'status': true,
 				'info': 'new user',
-				'login': login,
+				'name': login,
 				'password': password,
 				'isadmin': false,
 				'userid':userid
@@ -71,6 +81,8 @@ async function getAllArticles(){
 	}
 	return await _articles
 }
+
+// getAllArticles().then(res => console.log(res))
 
 async function getComments(id){
 	const article = await pool.query(`SELECT comments FROM articles WHERE articleid = ${id}`)
