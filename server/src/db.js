@@ -1,6 +1,14 @@
 const { Sequelize } = require('sequelize')
+const dotenv = require('dotenv')
 
-const sequelize = new Sequelize('postgres://postgres:qwerty@localhost:5432/AwesomeBlog', {
+// delete it on prod 
+const name = "postgres"
+const password = "qwerty"
+const DBName = "AwesomeBlog"
+const host = "localhost"
+const DBPort = 5432
+
+const sequelize = new Sequelize(`postgres://${name}:${password}@${host}:${DB_Port}/${DBName}`, {
 	logging: false
 })
 
