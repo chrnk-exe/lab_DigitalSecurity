@@ -3,6 +3,7 @@ const cors = require('cors');
 const init = require('./__init__').main
 const apiroutes = require('./api')
 const api = require('./dbapi')
+const dotenv = require('dotenv')
 
 function randomInteger(min, max) {
     let rand = min + Math.random() * (max + 1 - min);
