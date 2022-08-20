@@ -119,8 +119,6 @@ async function addComment(userid, body, articleid){
     articel[0].save()
 }
 
-addComment(1, 'VERY COOL ARTICLE BRO!', 1).then(() => console.log('comment send'))
-
 async function addArticle(info) {
     const {userid, title, body, year, month, day} = info 
     const date = new Date(`${year}, ${month}, ${day+1}`)

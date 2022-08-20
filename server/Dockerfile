@@ -1,4 +1,4 @@
-FROM node:latest-alpine
+FROM node
 WORKDIR /app
 COPY ./package.json ./
 RUN ["npm", "i"]

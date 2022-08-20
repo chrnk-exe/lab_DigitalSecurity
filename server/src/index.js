@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const init = require('./__init__').main
 const apiroutes = require('./api')
 const api = require('./dbapi')
 

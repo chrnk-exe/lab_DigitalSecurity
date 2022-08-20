@@ -10,7 +10,7 @@ services:
       - 4000:80
       # - 443:443
     volumes: 
-      - './nginx.conf:/etc/nginx/nginx.conf'
+      - './nginx/nginx.conf:/etc/nginx/nginx.conf'
     depends_on:
       - pg
       - api
@@ -22,15 +22,20 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_PASSWORD: qwerty
-      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 'qwerty'
+      POSTGRES_USER: 'postgres'
       POSTGRES_DB: 'AwesomeBlog'
+    # volumes:
+    #   - ./db/init.sh:/docker-entrypoint-initdb.d/init-user-db.sh
 
   api:
     container_name: 'server_app'
+    restart: 'always'
     build: 
       dockerfile: 'Dockerfile'
       context: './server'
     volumes:
       - /app/node_modules
       - ./server:/app
+    depends_on:
+      - pg
