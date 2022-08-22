@@ -9,7 +9,7 @@ const DBPort = 5432
 
 const old = `postgres://${name}:${password}@${host}:${DBPort}/${DBName}`
 
-const sequelize = new Sequelize('postgres://postgres:qwerty@localhost:5432/AwesomeBlog', {
+const sequelize = new Sequelize('postgres://postgres:qwerty@pg:5432/AwesomeBlog', {
 	logging: false
 })
 
