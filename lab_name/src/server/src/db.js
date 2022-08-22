@@ -1,6 +1,9 @@
 const { Sequelize } = require('sequelize')
+const path = require('path');
+require('dotenv').config({ path: path.resolve(process.cwd(), '.env')});
+const {DB_DATABASE, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD} = process.env
 
-const sequelize = new Sequelize('postgres://postgres:qwerty@localhost:5432/AwesomeBlog', {
+const sequelize = new Sequelize(`postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}`, {
 	logging: false
 })
 

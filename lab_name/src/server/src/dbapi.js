@@ -14,7 +14,7 @@ async function checkUser(userLogin, password){
     }).then(toPlain)
     if((await users).length === 0){
         const newUser = await registerNewUser(userLogin, password).then(toPlain)
-        const {login, userid, userpassword, isadmin} = await newUser
+        const {login, id, userpassword, isadmin} = await newUser
         return {
             status: true,
             auth: true,
@@ -38,7 +38,7 @@ async function checkUser(userLogin, password){
                 name: userLogin,
                 password: user.userpassword,
                 isadmin: user.isadmin,
-                userid: user.userid
+                userid: user.id
             }
         } else {
             return {
@@ -64,7 +64,7 @@ async function registerNewUser(login, password){
 async function getAllArticles(){
     const articles = Articles.findAll({
         order: [
-            ['articleid', 'ASC']
+            ['id', 'ASC']
         ]
     }).then(toPlain)
     return articles
@@ -73,7 +73,7 @@ async function getAllArticles(){
 async function getComments(articleid){
 	let article = Articles.findAll({
         where: {
-            articleid
+            id: articleid
         },
         attributes: ['comments']
     }).then(toPlain)
@@ -82,13 +82,13 @@ async function getComments(articleid){
 	if(commentsList.length > 0) {
         const commentsPool = Comments.findAll({
             where: {
-                commentid: commentsList
+                id: commentsList
             }
         }).then(toPlain)
         let useridComments = (await commentsPool).map(comment => comment.userid)
         let names = await Users.findAll({
             where: {
-                userid: useridComments
+                id: useridComments
             }, 
             attributes: ['userid', 'login']
         }).then(toPlain)
@@ -103,14 +103,14 @@ async function getComments(articleid){
 
 async function addComment(userid, body, articleid){
     const newComment = await Comments.create({
-        userid,
+        id: userid,
         body,
         articleid
     })
     console.log(newComment.commentid)
     const articel = await Articles.findAll({
         where: {
-            articleid
+            id: articleid
         }
     })
     let comments = JSON.parse(articel[0].comments)
@@ -119,7 +119,7 @@ async function addComment(userid, body, articleid){
     articel[0].save()
 }
 
-addComment(1, 'VERY COOL ARTICLE BRO!', 1).then(() => console.log('comment send'))
+// addComment(1, 'VERY COOL ARTICLE BRO!', 1).then(() => console.log('comment send'))
 
 async function addArticle(info) {
     const {userid, title, body, year, month, day} = info 
@@ -136,7 +136,7 @@ async function addArticle(info) {
 async function getArticle(articleid){
     const article = await Articles.findAll({
         where: {
-            articleid
+            id: articleid
         }
     })
     if(article.length){
@@ -156,7 +156,7 @@ async function getArticle(articleid){
 const checkUserRules = async (userid) => {
 	const result = await Users.findAll({
         where: {
-            userid
+            id: userid
         }
     })
 	return result[0].getDataValue('isadmin')

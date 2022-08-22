@@ -8,9 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      articleid: {
-        type: Sequelize.INTEGER
-      },
       title: {
         type: Sequelize.TEXT
       },

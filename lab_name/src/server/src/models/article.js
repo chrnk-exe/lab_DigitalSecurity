@@ -14,7 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Article.init({
-    articleid: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true
+    },
     title: DataTypes.TEXT,
     body: DataTypes.TEXT,
     date_of_creation: DataTypes.DATE,
@@ -23,6 +28,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Article',
+    tableName: 'Articles',
+    timestamps: true
   });
   return Article;
 };
