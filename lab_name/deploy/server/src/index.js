@@ -1,9 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-const init = require('./__init__').init
+const init = require('./__init__').main
 const apiroutes = require('./api')
 const api = require('./dbapi')
-const path = require('path')
 
 function randomInteger(min, max) {
     let rand = min + Math.random() * (max + 1 - min);
@@ -13,23 +12,15 @@ function randomInteger(min, max) {
 const app = express()
 const port = 5000
 
-app.use((req, res, next) => {
-	console.log(req.protocol + '://' + req.get('host') + req.originalUrl)
-	next()
-})
-
 app.use(cors())
 app.use(express.json())
 
-app.use(express.static(path.resolve(__dirname, '../../build')))
-
 app.use('/api', apiroutes);
-app.get('/articles', async (req, res) => {
+app.get('/', async (req, res) => {
 	let articles = await api.getAllArticles()
 	let response = {articles}
-	console.log(response)
-	res.set('Content-Type', 'application/json')
-  	res.json(response)
+	// res.set("Content-Type", "application/json")
+  res.json(response)
 })
 
 app.post('/login', async (req, res) => {
@@ -37,11 +28,7 @@ app.post('/login', async (req, res) => {
 	let result = await api.checkUser(login, password)
 	res.json(result)
 })
-
-app.get('*', (req, res) => {
-	res.sendFile(path.resolve(__dirname, '../../build', 'index.html'));
-})
  
 app.listen(port, () => {
-  	console.log(`App listening on port ${port}`)
+  	console.log(`Example app listening on port ${port}`)
 })

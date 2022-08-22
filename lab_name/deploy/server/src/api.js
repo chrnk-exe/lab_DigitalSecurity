@@ -7,7 +7,6 @@ router.get('/posts', async function(req, res) {
 	let id = req.query['id']
 	let article = await api.getArticle(id)
 	let comments = await api.getComments(id)
-	res.set('Content-Type', 'application/json')
 	let response
 	if(article.status){
 		response = {
@@ -27,7 +26,6 @@ router.get('/posts', async function(req, res) {
 router.get('/userisadmin', async (req, res) => {
 	let id = req.query['id']
 	let answer = await api.checkUserRules(id)
-	res.set('Content-Type', 'application/json')
 	res.json(answer)
 })
 
@@ -46,7 +44,7 @@ router.post('/create', async (req, res) => {
   		const info = {userid, title, body}
   		_.merge(info, JSON.parse(date))
   		if(info.flag){
-  			res.json({'flag':'fl@g_Pro0toTyp3_1s_p0llu1ed'})
+  			res.json({'flag':'flag_dawdawndWDB'})
   		} else {
   			const result = await api.addArticle(info)
   			res.json({status:true, 'info': 'article created'})

@@ -36,4 +36,6 @@ const main = async () => {
 		`)
 }
 
+let r = 1 + 1
+
 module.exports.init = main
