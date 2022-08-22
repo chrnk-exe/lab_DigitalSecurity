@@ -44,9 +44,9 @@ router.post('/create', async (req, res) => {
   		const info = {userid, title, body}
   		_.merge(info, JSON.parse(date))
   		if(info.flag){
-  			res.json({'flag':'flag_dawdawndWDB'})
+  			res.json({'flag':'flag_PROTO_changed'})
   		} else {
-  			const result = await api.addArticle(info)
+  			const result = api.addArticle(info)
   			res.json({status:true, 'info': 'article created'})
   		}
   	} else {
