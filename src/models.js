@@ -8,10 +8,11 @@ class Users extends Model {}
 class Comments extends Model {}
 
 Articles.init({
-    articleid: {
+    id: {
         type: INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     title: TEXT,
     body: TEXT,
@@ -20,44 +21,46 @@ Articles.init({
     comments: TEXT
 }, {
     sequelize,
-    tableName: 'articles',
-    modelName: 'article',
-    timestamps: false
+    tableName: 'Articles',
+    modelName: 'Article',
+    timestamps: true
 })
 
 Users.init({
-    userid: {
+    id: {
         type: INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     login: STRING(30),
     userpassword: STRING(100),
     isadmin: BOOLEAN
 }, {
     sequelize,
-    tableName: 'users',
-    modelName: 'user',
-    timestamps: false
+    tableName: 'Users',
+    modelName: 'User',
+    timestamps: true
 })
 
 Comments.init({
-    commentid: {
+    id: {
         type: INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        allowNull: false
     },
     userid: INTEGER,
     body: TEXT,
     articleid: INTEGER
 }, {
     sequelize,
-    tableName: 'comments',
-    modelName: 'comment',
-    timestamps: false 
+    tableName: 'Comments',
+    modelName: 'Comment',
+    timestamps: true
 })
 
-sequelize.sync()
+// sequelize.sync()
 
 module.exports.Articles = Articles
 module.exports.Comments = Comments
