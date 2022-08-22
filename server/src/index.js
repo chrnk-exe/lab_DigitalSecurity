@@ -18,9 +18,9 @@ app.use(express.json())
 app.use(express.static(path.resolve(__dirname, '../build')))
 
 app.use('/api', apiroutes);
-app.get('/', async (req, res) => {
+app.get('/articles', async (req, res) => {
 	let articles = await api.getAllArticles()
-	let response = { articles }
+	let response = articles
 	res.set("Content-Type", "application/json")
   res.json(response)
 })

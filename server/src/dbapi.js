@@ -60,12 +60,12 @@ async function registerNewUser(login, password){
 }
 
 async function getAllArticles(){
-    const articles = await Articles.findAll({
+    const articles = Articles.findAll({
         order: [
             ['id', 'ASC']
         ]
     }).then(toPlain)
-    return { articles }
+    return articles
 }
 
 async function getComments(articleid){
@@ -88,9 +88,9 @@ async function getComments(articleid){
             where: {
                 id: useridComments
             }, 
-            attributes: ['userid', 'login']
+            attributes: ['id', 'login']
         }).then(toPlain)
-        const comments = (await commentsPool).map(comment => ({...comment, name: names.find(name => name.userid == comment.userid).login}))
+        const comments = (await commentsPool).map(comment => ({...comment, name: names.find(name => name.id == comment.userid).login}))
         return comments
 	} else {
 		return []
@@ -101,18 +101,17 @@ async function getComments(articleid){
 
 async function addComment(userid, body, articleid){
     const newComment = await Comments.create({
-        id: userid,
+        userid,
         body,
         articleid
     })
-    console.log(newComment.commentid)
     const articel = await Articles.findAll({
         where: {
             id: articleid
         }
     })
     let comments = JSON.parse(articel[0].comments)
-    comments.push(newComment.commentid)
+    comments.push(newComment.id)
     articel[0].comments = JSON.stringify(comments)
     articel[0].save()
 }
