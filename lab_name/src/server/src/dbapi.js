@@ -50,8 +50,6 @@ async function checkUser(userLogin, password){
     }
 }
 
-checkUser('Loxxxxxx', '12345')
-
 async function registerNewUser(login, password){
     const newUser = await Users.create({
         login: login,
