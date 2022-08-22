@@ -40,7 +40,9 @@ function App() {
           <Route exact={true} path="/" element={<MainApp />} />
           <Route exact={true} path="/create" element={ <ArticleCreator />} />
           {
-            articles.map((article, index) => <Route key={index} path={`/posts/${article.articleid}`} element={ <MyArticle id={article.articleid}/>}></Route>)
+            articles
+            ? articles.map((article, index) => <Route key={index} path={`/posts/${article.id}`} element={ <MyArticle id={article.id}/>}></Route>)
+            : null
           }
         </Routes>
         <button onClick={() => navigate('/', {replace: true})} className={classes.backButton} disabled={id === -1}> <img src={backArrow} height={35} width={35} alt=''/>Back</button>

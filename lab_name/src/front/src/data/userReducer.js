@@ -1,4 +1,5 @@
-let storage = JSON.parse(window.sessionStorage.getItem('user'))
+// let storage = JSON.parse(window.sessionStorage.getItem('user'))
+let storage = null
 
 let initialState = storage === null ? {
     user: 'user', //'unknown',
@@ -6,9 +7,9 @@ let initialState = storage === null ? {
     id: -1
 }
 : {
-    user: storage.user, //'unknown',
-    name: storage.name,
-    id: storage.id
+    user: storage?.user, //'unknown',
+    name: storage?.name,
+    id: storage?.id
 }
 
 const SET_USER = 'setUser'

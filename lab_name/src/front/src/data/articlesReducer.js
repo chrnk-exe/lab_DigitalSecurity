@@ -1,7 +1,5 @@
-let storage = JSON.parse(window.sessionStorage.getItem('articles'))
-
 let initialState = {
-    articles: storage === null ? [] : storage,
+    articles: [],
     currentArticle: {},
     comments: undefined
 }

@@ -10,7 +10,6 @@ import { setArticlesRedux } from '../data/articlesReducer'
 
 const MainApp = () => {
     const articles = useSelector(state => state.articles.articles)
-    // console.log(articles)
     const userInfo = useSelector(state => state.user)
     const dispatch = useDispatch()
     const navigator = useNavigate()
@@ -21,9 +20,7 @@ const MainApp = () => {
                 method: 'GET',
             })
             res = await res.json()
-            console.log(res)
-            dispatch(setArticlesRedux(res.articles))
-            window.sessionStorage.setItem('articles', JSON.stringify(res.articles))
+            dispatch(setArticlesRedux(res))
           }
           fetchData()
     }, [])
@@ -32,6 +29,8 @@ const MainApp = () => {
         e.preventDefault()
         navigator('/create', {replace: true})
     }
+
+    console.log(articles)
 
   return (
     <main className={classes.main}>
@@ -51,9 +50,9 @@ const MainApp = () => {
                 <h1>{'My Blog'}</h1>
             </header>
             <main>
-                {articles.length === 0
+                {articles?.length === 0
                 ? <Loader />
-                : articles.map((article, index) => <ArticlePreview title={article.title} body={article.body} key={article.articleid} id={article.articleid} date={article.date_of_creation}/>)}
+                : articles?.map((article, index) => <ArticlePreview title={article.title} body={article.body} key={article.id} id={article.id} date={article.date_of_creation}/>)}
             </main>
         </section>
     </main>
