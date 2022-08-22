@@ -22,7 +22,7 @@ async function checkUser(userLogin, password){
             name: login,
             password: userpassword,
             isadmin,
-            userid
+            userid: id
         }
     } else if( (await users).length > 1) {
         return {
@@ -60,12 +60,12 @@ async function registerNewUser(login, password){
 }
 
 async function getAllArticles(){
-    const articles = Articles.findAll({
+    const articles = await Articles.findAll({
         order: [
             ['id', 'ASC']
         ]
     }).then(toPlain)
-    return articles
+    return { articles }
 }
 
 async function getComments(articleid){
