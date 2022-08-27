@@ -1,3 +1,4 @@
+
 Скрипты в папке server:
 
 - migrate - инициализирует бд с sequelize-cli
