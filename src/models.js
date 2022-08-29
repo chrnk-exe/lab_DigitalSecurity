@@ -1,8 +1,8 @@
 const sequelize = require('./db')
 const { Model, DataTypes } = require('sequelize')
-const { User } = require('./models/user')
-const { Comment } = require('./models/comment')
-const { Article } = require('./models/article')
+const User = require('./models/user')
+const Comment = require('./models/comment')
+const Article = require('./models/article')
 
 const { STRING, INTEGER, TEXT, DATE, BOOLEAN } = DataTypes
 
