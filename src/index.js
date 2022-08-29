@@ -12,7 +12,18 @@ function randomInteger(min, max) {
 const app = express()
 const port = 5000
 
-app.use(cors({origin: true}))
+const corsOptions = {
+	credentials: true,
+    	origin: "*"
+}
+
+//app.use(corsMiddleware())
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+app.use(cors(corsOptions))
 app.use(express.json())
 
 app.use(express.static(path.resolve(__dirname, '../build')))
@@ -36,5 +47,5 @@ app.get("*", (req, res) => {
 })
  
 app.listen(port, () => {
-  	console.log(`Example app listening on port ${port}`)
+  	console.log(`App listening on port ${port}`)
 })
