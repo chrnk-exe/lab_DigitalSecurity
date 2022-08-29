@@ -1,10 +1,7 @@
 'use strict';
 const {
-  Model, DataTypes
+  Model
 } = require('sequelize');
-
-const sequelize = require('../db')
-
 
 class Comment extends Model {
   /**
@@ -16,22 +13,6 @@ class Comment extends Model {
     // define association here
   }
 }
-Comment.init({
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true
-  },
-  userid: DataTypes.INTEGER,
-  body: DataTypes.TEXT,
-  articleid: DataTypes.INTEGER
-}, {
-  sequelize,
-  modelName: 'Comment',
-  tableName: 'Comments',
-  timestamps: true
-});
 
 module.exports = (sequelize, DataTypes) => {
   class Comment extends Model {
