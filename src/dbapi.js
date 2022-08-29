@@ -156,8 +156,10 @@ const checkUserRules = async (userid) => {
             id: userid
         }
     })
-	return result[0]?.isadmin
+    console.log(result)
+	return result[0].getDataValue('isadmin')
 }
+
 
 module.exports.addArticle = addArticle
 module.exports.addComment = addComment	
