@@ -3,6 +3,9 @@ const {
   Model, DataTypes
 } = require('sequelize');
 
+const sequelize = require('../db')
+
+
 class Comment extends Model {
   /**
    * Helper method for defining associations.
