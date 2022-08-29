@@ -23,7 +23,8 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-app.use(cors(corsOptions))
+
+app.use(cors({origin: "http://84.252.128.241", credentials: true}))
 app.use(express.json())
 
 app.use(express.static(path.resolve(__dirname, '../build')))
