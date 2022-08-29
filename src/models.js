@@ -6,9 +6,9 @@ const { Article } = require('./models/article')
 
 const { STRING, INTEGER, TEXT, DATE, BOOLEAN } = DataTypes
 
-class Articles extends Article{}
-class Users extends User {}
-class Comments extends Comment {}
+class Articles extends Article() {}
+class Users extends User() {}
+class Comments extends Comment() {}
 
 // Articles.init({
 //     id: {
