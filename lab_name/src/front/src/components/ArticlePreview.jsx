@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux/es/exports'
 import { setArticleState } from '../data/articlesReducer'
 // import history from 'history/browser'
 import classes from '../styles/ArticlePreview.module.css'
+import host from '../data/host'
 
 const ArticlePreview = ({title, body, id, date}) => {
     const navigate = useNavigate()
@@ -15,7 +16,7 @@ const ArticlePreview = ({title, body, id, date}) => {
     }
 
     const goToArticleHandler = async () => {
-        let resp = await fetch(`http://localhost:5000/api/posts?id=${id}`)
+        let resp = await fetch(`http://${host}:5000/api/posts?id=${id}`)
         if(resp.status === 200){
             resp = await resp.json()
             dispatch(setArticleState({

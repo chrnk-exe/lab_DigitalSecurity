@@ -7,6 +7,7 @@ import adminPic from '../assets/admin.jpg'
 import userPic from '../assets/user.jpg'
 import ArticlePreview from './ArticlePreview'
 import { setArticlesRedux } from '../data/articlesReducer'
+import host from '../data/host'
 
 const MainApp = () => {
     const articles = useSelector(state => state.articles.articles)
@@ -16,7 +17,7 @@ const MainApp = () => {
 
     useEffect(() => {
         async function fetchData(){
-            let res = await fetch('http://localhost:5000/articles', {
+            let res = await fetch(`http://${host}:5000/articles`, {
                 method: 'GET',
             })
             res = await res.json()

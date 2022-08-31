@@ -11,9 +11,9 @@ import { setArticleState, setComments } from '../data/articlesReducer'
 import CommentItem from './CommentItem'
 import adminPic from '../assets/admin.jpg'
 import userPic from '../assets/user.jpg'
+import host from '../data/host'
 
 const MyArticle = ({id}) => {
-    const navigator = useNavigate()
     const dispatch = useDispatch()
 
     const { currentArticle, comments } = useSelector(state => state.articles)
@@ -31,7 +31,7 @@ const MyArticle = ({id}) => {
     const sendCommentHandler = (e) => {
       e.preventDefault()
       const randId = Date.now()
-      fetch('http://localhost:5000/api/comment', {
+      fetch(`http://${host}:5000/api/comment`, {
         method: 'POST',
         headers: {
           'Content-Type':'application/json'
@@ -43,7 +43,7 @@ const MyArticle = ({id}) => {
 
     useEffect(() => {
       const fetchData = async (id) => {
-        let resp = await fetch(`http://localhost:5000/api/posts?id=${id}`)
+        let resp = await fetch(`http://${host}:5000/api/posts?id=${id}`)
         if(resp.status === 200){
           resp = await resp.json()
           dispatch(setArticleState({

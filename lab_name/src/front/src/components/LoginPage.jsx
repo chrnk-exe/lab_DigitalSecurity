@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux/es/exports'
 import classes from '../styles/LoginPage.module.css'
 import { setAdmin, setUser } from '../data/userReducer'
+import host from '../data/host'
 
 const LoginPage = () => {
     const [form, setForm] = useState({
@@ -15,7 +16,7 @@ const LoginPage = () => {
     const authorizationHandler = async (e) => {
         const storage = window.sessionStorage
         e.preventDefault()
-        let res = await fetch('http://localhost:5000/login', {
+        let res = await fetch(`http://${host}:5000/login`, {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'

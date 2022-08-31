@@ -14,6 +14,7 @@ import { setArticlesRedux } from '../data/articlesReducer';
 import LoginPage from './LoginPage';
 import MyArticle from './MyArticle';
 import backArrow from '../assets/back.svg'
+import host from '../data/host';
 
 function App() {
   const articles = useSelector(state => state.articles.articles)
@@ -24,6 +25,7 @@ function App() {
     window.addEventListener('popstate', () => {
       navigator('/')
     })
+    console.log(host)
     // console.log(window.sessionStorage)
     if(id === -1)navigate('/login', {replace: true})
   }, [])
