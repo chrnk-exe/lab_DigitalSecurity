@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const apiroutes = require('./api')
-const api = require('./dbapi')
+const api = require('./db')
 const path = require('path')
 
 function randomInteger(min, max) {

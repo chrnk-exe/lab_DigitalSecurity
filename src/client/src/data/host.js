@@ -1,2 +1,2 @@
-const host = '84.201.174.172'
+const host = 'localhost'
 export default host

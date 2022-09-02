@@ -5,8 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "mundo": "npx sequelize-cli db:seed:undo && npx sequelize-cli db:migrate:undo:all",
+    "migrate-start": "npm run migrate && npm run start",
+    "migrate-startpm2": "npm run migrate && npm run startpm2",
+    "startpm2": "cd src && pm2 start index.js",
     "start": "cd src && node index.js"
-  },
+},
   "author": "zxchrnk",
   "license": "ISC",
   "dependencies": {

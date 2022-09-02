@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const api = require('./dbapi')
+const api = require('./db')
 const _ = require('lodash')
 
 router.get('/posts', async function(req, res) {
