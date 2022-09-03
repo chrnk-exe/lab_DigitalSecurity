@@ -25,13 +25,13 @@ const LoginPage = () => {
         })
         res = await res.json()
         if(res['auth']){
-            navigator('/', {replace: true})
             res['isadmin'] ? dispatch(setAdmin({name: res['name'], id: res['userid']})) : dispatch(setUser({name: res['name'], id: res['userid']}))
             storage.setItem('user', JSON.stringify({
                 name: res['name'],
                 id: res['userid'],
                 user: res['isadmin'] ? 'admin' : 'user'
             }))
+            navigator('/')
         } else {
             alert(res['info'])
         }

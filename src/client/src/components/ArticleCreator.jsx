@@ -4,16 +4,18 @@ import ButtonStyles from '../styles/LoginPage.module.css'
 import classes from '../styles/MyArticle.module.css'
 import { useSelector } from 'react-redux/es/exports'
 import host from '../data/host'
+import { useNavigate } from 'react-router'
 
 const ArticleCreator = () => {
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
     const {id, user} = useSelector(state => state.user)
+    const navigator = useNavigate()
 
     const addNewArticle = async (e) => {
         e.preventDefault()
         let date = new Date()
-	    date = `{"year": ${date.getFullYear()}, "month": ${date.getMonth()+1}, "day": ${date.getDate()}}`
+	      date = `{"year": ${date.getFullYear()}, "month": ${date.getMonth()+1}, "day": ${date.getDate()}}`
         const requestBody = {
             title,
             body,
@@ -27,7 +29,7 @@ const ArticleCreator = () => {
             },
             body: JSON.stringify(requestBody)
         })
-        // console.log(JSON.stringify(requestBody))
+        navigator('/')
     }
 
     if(user !== 'admin') {

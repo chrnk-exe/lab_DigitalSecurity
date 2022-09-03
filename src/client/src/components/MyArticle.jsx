@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux/es/exports'
 import Loader from './Loader'
 
@@ -13,9 +13,10 @@ import adminPic from '../assets/admin.jpg'
 import userPic from '../assets/user.jpg'
 import host from '../data/host'
 
-const MyArticle = ({id}) => {
+const MyArticle = () => {
     const dispatch = useDispatch()
 
+    const { id } = useParams()
     const { currentArticle, comments } = useSelector(state => state.articles)
     const userIsAdmin = useSelector(state => state.user.user) === 'admin'
     const userName = useSelector(state => state.user.name)
@@ -50,7 +51,6 @@ const MyArticle = ({id}) => {
             articles: resp.data,
             comments: resp.comments
           }))
-          console.log(resp)
         }
       }
       fetchData(id)
@@ -88,7 +88,7 @@ const MyArticle = ({id}) => {
                     <textarea value={comment} onChange={e => setComment(e.target.value)} className={classes.textArea} cols={65} rows={5}/>
                 </div>
             </div>
-            <button onClick={sendCommentHandler} className={buttonStyles.LoginPageButton + ' ' + classes.ButtonFix}>Send your comment!</button>
+            <button disabled={userid === -1} onClick={sendCommentHandler} className={buttonStyles.LoginPageButton + ' ' + classes.ButtonFix}>Send your comment!</button>
           </div>
         </footer>
       </article>

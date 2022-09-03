@@ -1,8 +1,7 @@
 import React from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux/es/exports'
 import { setArticleState } from '../data/articlesReducer'
-// import history from 'history/browser'
 import classes from '../styles/ArticlePreview.module.css'
 import host from '../data/host'
 
@@ -23,10 +22,8 @@ const ArticlePreview = ({title, body, id, date}) => {
                 articles: resp.data,
                 comments: resp.comments
             }))
-
-            window.sessionStorage.setItem('currentArticle', JSON.stringify())
         }
-        navigate(`/posts/${id}`, {replace: true, state: {id}})
+        navigate(`/posts/${id}`)
     }
 
   return (

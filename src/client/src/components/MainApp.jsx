@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux/es/exports'
-import { Route, useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import classes from '../styles/MainApp.module.css'
 import Loader from './Loader'
 import adminPic from '../assets/admin.jpg'
@@ -28,10 +28,8 @@ const MainApp = () => {
 
     const createArticleHandler = e => {
         e.preventDefault()
-        navigator('/create', {replace: true})
+        navigator('/create')
     }
-
-    console.log(articles)
 
   return (
     <main className={classes.main}>
