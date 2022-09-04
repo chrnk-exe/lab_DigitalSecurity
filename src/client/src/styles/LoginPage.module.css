@@ -123,6 +123,15 @@ h2 {
     font-size: 18px;
 }
 
-.logo p {
-    margin-left: 40px;
+.underAuthButton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top:5px;
+}
+
+.link {
+    font-size: 0.55em;
+    background-color: inherit;
 }

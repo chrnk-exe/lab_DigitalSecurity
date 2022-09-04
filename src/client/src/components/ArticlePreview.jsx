@@ -1,9 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux/es/exports'
+
 import { setArticleState } from '../data/articlesReducer'
-import classes from '../styles/ArticlePreview.module.css'
 import host from '../data/host'
+
+import classes from '../styles/ArticlePreview.module.css'
 
 const ArticlePreview = ({title, body, id, date}) => {
     const navigate = useNavigate()

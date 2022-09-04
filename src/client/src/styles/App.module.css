@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 1fr;
     height: 100%;
-    width: 100%;
+    /* width: 100%; */
     margin-top: 5%;
     margin-inline: 5%;
 }
@@ -10,6 +10,11 @@
 .mainWithUser {
     grid-template-columns: 4fr 13fr;
     gap: 20px;
+    width: 100%;
+}
+
+.mainWithoutUser {
+    width: 65%;
 }
 
 section {
@@ -102,4 +107,9 @@ section {
     box-shadow: 0 3px 30px hsla(20, 67%, 75%, 0.15);
     color: #000;
     border: 1px solid white;
+}
+
+.footer {
+    margin: 15px;
+    font-size: 1.1em;
 }

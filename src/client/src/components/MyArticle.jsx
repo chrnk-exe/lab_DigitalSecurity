@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux/es/exports'
+
 import Loader from './Loader'
-
-import classes from '../styles/MyArticle.module.css'
-import commentItemStyles from '../styles/CommentItem.module.css'
-import buttonStyles from '../styles/LoginPage.module.css'
-
 import { setArticleState, setComments } from '../data/articlesReducer'
+import host from '../data/host'
+
 import CommentItem from './CommentItem'
 import adminPic from '../assets/admin.jpg'
 import userPic from '../assets/user.jpg'
-import host from '../data/host'
+import classes from '../styles/MyArticle.module.css'
+import commentItemStyles from '../styles/CommentItem.module.css'
+import buttonStyles from '../styles/LoginPage.module.css'
 
 // {id}
 const MyArticle = () => {
@@ -83,7 +83,7 @@ const MyArticle = () => {
           <div className={classes.commentArea}>
             Leave your comment here!
             <div className={commentItemStyles.CommentItem}>
-                <img style={{borderRadius: '5px'}} src={userIsAdmin ? adminPic : userPic} width={80} height={80}/>
+                <img style={{borderRadius: '5px'}} src={userIsAdmin ? adminPic : userPic} width={80} height={80} alt=''/>
                 <div className={commentItemStyles.content}>
                     <div className={commentItemStyles.names}><h2>{userName}</h2></div>
                     <textarea value={comment} onChange={e => setComment(e.target.value)} className={classes.textArea} cols={65} rows={5}/>

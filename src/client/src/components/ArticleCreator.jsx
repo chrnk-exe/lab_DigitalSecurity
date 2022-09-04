@@ -1,10 +1,13 @@
 import React, {useState} from 'react'
+import { useNavigate } from 'react-router'
+import { useSelector } from 'react-redux/es/exports'
+
+import host from '../data/host'
+
 import styles from '../styles/ArticleCreator.module.css'
 import ButtonStyles from '../styles/LoginPage.module.css'
 import classes from '../styles/MyArticle.module.css'
-import { useSelector } from 'react-redux/es/exports'
-import host from '../data/host'
-import { useNavigate } from 'react-router'
+
 
 const ArticleCreator = () => {
     const [title, setTitle] = useState('')
@@ -22,7 +25,8 @@ const ArticleCreator = () => {
             userid: id,
             date
         }
-        const resp = await fetch(`http://${host}:5000/api/create`, {
+        // const resp = 
+            await fetch(`http://${host}:5000/api/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -1,12 +1,15 @@
 import React from 'react'
-import classes from '../styles/Header.module.css'
-import {ButtonGroup, Button} from '@mui/material'
+import { useSelector } from 'react-redux/es/exports';
+import { useNavigate } from 'react-router'
+import { ThemeProvider } from '@mui/material'
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 import LoginIcon from '@mui/icons-material/LoginOutlined';
 import LogoutIcon from "@mui/icons-material/LogoutOutlined"
-import { useSelector } from 'react-redux/es/exports';
-import {useNavigate} from 'react-router'
-import { ThemeProvider } from '@mui/material'
+
 import greenTheme from './theme';
+
+import classes from '../styles/Header.module.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const Header = () => {
@@ -23,7 +26,7 @@ const Header = () => {
                     startIcon={<ArrowBackIcon />}>
                         Back
                     </Button>
-                    <p>Logo</p>
+                    <p className={classes.logoText} onClick={() => navigate('/')}>Omega IT Technologies</p>
                 </div>
                 <div className={classes.buttons}>
                     {

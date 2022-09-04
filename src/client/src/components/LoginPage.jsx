@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux/es/exports'
-import classes from '../styles/LoginPage.module.css'
+import LockIcon from '@mui/icons-material/LockOutlined';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Checkbox from '@mui/material/Checkbox';
+
+import TextFieldPassword from '../UI/TextFieldPassword'
+
 import { setAdmin, setUser } from '../data/userReducer'
 import host from '../data/host'
-import LockIcon from '@mui/icons-material/LockOutlined';
-import { Button, TextField } from '@mui/material'
-import TextFieldPassword from '../UI/TextFieldPassword'
-import { Checkbox } from '@mui/material'
-import { useParams } from 'react-router-dom'
-import useDebounce from '../data/useDebounce'
+import useDebounce from '../hooks/useDebounce'
+
+import classes from '../styles/LoginPage.module.css'
 
 const LoginPage = () => {
     const [form, setForm] = useState({
@@ -18,7 +21,7 @@ const LoginPage = () => {
         password2: ''
     })
     const [userIsValid, setUserValid] = useState(false)
-    const userName = useDebounce(form.login, 250)
+    const userName = useDebounce(form.login, 350)
     const navigator = useNavigate()
     const dispatch = useDispatch()
     const { sign } = useParams()
@@ -40,7 +43,9 @@ const LoginPage = () => {
     const authorizationHandler = async (e) => {
         const storage = window.sessionStorage
         e.preventDefault()
-        if(form.password === form.password2 || sign === "signin" && userIsValid){
+        if((form.password === form.password2 && sign === "signup") || 
+            (userIsValid && sign === "signin"))
+            {
             let res = await fetch(`http://${host}:5000/login`, {
                 method: 'POST',
                 headers: {
@@ -74,7 +79,7 @@ const LoginPage = () => {
                         label="Username" 
                         required 
                         variant="outlined"
-                        color={userIsValid || form.login.length === 0 ? "info" : "error"}
+                        color={userIsValid || form.login.length === 0 || sign === 'signup' ? "info" : "error"}
                         value={form.login}
                         onChange={e => setForm({...form, login: e.target.value})}/>
                         {/* {!(userIsValid || form.login.length === 0)
@@ -107,10 +112,17 @@ const LoginPage = () => {
                     : null
                     }
                     <div className={classes.checkboxContainer}>
-                        <Checkbox /> <p>Remember me (Coming soon!)</p>
+                        <Checkbox /> <p>Remember me {'(Coming soon!)'}</p>
                     </div>
                     <div className={classes.textfield}>
                         <Button onClick={authorizationHandler} variant={"contained"} fullWidth>Sign in</Button>
+                    </div>
+                    <div className={[classes.underAuthButton].join(' ')}>
+                        <Link className={classes.link} to={''}>Forgot password?</Link>
+                        {   sign !== 'signup'
+                        ? <Link className={classes.link} to={'signup'}>Don't have an account? Sign Up</Link>
+                        : <Link className={classes.link} to={'signin'}>Already have an account? Sign In</Link>
+                        }
                     </div>
                 </div>
             </form>

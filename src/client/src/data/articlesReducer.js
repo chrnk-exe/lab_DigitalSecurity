@@ -1,7 +1,8 @@
 let initialState = {
     articles: [],
     currentArticle: {},
-    comments: undefined
+    comments: undefined,
+    maxArticles: 1
 }
 
 const SET_ARTICLES = 'setArticles'
@@ -9,13 +10,17 @@ const SET_COMMENTS = 'setComments'
 const SET_ARTICLE_STATE = 'setArticleState'
 
 export const articlesReducer = (state = initialState, action) => {
+    let articles, comments, maxArticles
+    if(action.payload){
+        ({articles, comments, maxArticles} = action.payload)
+    }
     switch(action.type){
         case SET_ARTICLES:
-            return {...state, articles: action.payload}
+            return {...state, articles: articles, maxArticles: maxArticles}
         case SET_COMMENTS:
             return {...state, comments: action.payload}
         case SET_ARTICLE_STATE:
-            return {...state, currentArticle: action.payload.articles, comments: action.payload.comments}
+            return {...state, currentArticle: articles, comments: comments, maxArticles: maxArticles}
         default:
             return state
     }

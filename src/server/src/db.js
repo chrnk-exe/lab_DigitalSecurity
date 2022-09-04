@@ -81,13 +81,22 @@ async function registerNewUser(login, password){
     return newUser
 }
 
-async function getAllArticles(){
+async function getAllArticles(page){
+    let arr = []
+    for(let i = ((page * 10) - 9); i <= (page * 10); i++){
+        arr.push(i)
+    }
+    const count = await Articles.findAll()
     const articles = Articles.findAll({
+        where:{
+            id: arr
+        },
         order: [
             ['id', 'ASC']
         ]
     }).then(toPlain)
-    return articles
+    let res = {articles: await articles, maxArticles: count.length}
+    return res
 }
 
 async function getComments(articleid){
