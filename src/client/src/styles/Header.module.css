@@ -1,0 +1,31 @@
+.header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #565656;
+    color: #fffff1;
+    font-size: 1.1em;
+}
+
+.buttons {
+    font-size: 1em;
+    font-weight: 700;
+    color: rgb(69, 231, 177);
+    border-color:rgb(69, 231, 177);
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: -15px;
+}
+
+.logo p {
+    margin-left: 40px;
+}

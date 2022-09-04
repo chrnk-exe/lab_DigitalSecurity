@@ -182,6 +182,15 @@ const checkUserRules = async (userid) => {
 	return result[0].getDataValue('isadmin')
 }
 
+const checkUserName = async (name) => {
+    const result = Users.findAll({
+        where: {
+            login: name
+        }
+    }).then(toPlain)
+    return await result
+}
+
 
 module.exports.addArticle = addArticle
 module.exports.addComment = addComment	
@@ -190,3 +199,4 @@ module.exports.getAllArticles = getAllArticles
 module.exports.getComments = getComments
 module.exports.getArticle = getArticle
 module.exports.checkUserRules = checkUserRules
+module.exports.checkUserName = checkUserName

@@ -35,6 +35,14 @@ router.post('/comment', async function(req, res) {
 	res.json(result)
 });
 
+router.post('/check_user', async function(req, res) {
+	let { name } = req.body
+	let resp = await api.checkUserName(name)
+	let user = resp[0]
+	if(user)res.json({name: user.login, info: "Name is correct"})
+	else res.json({info: "User doesn't exist", name: null})
+})
+
 
 router.post('/create', async (req, res) => {
   	const {userid, title, body, date} = req.body

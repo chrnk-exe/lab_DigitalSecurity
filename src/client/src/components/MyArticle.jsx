@@ -13,6 +13,7 @@ import adminPic from '../assets/admin.jpg'
 import userPic from '../assets/user.jpg'
 import host from '../data/host'
 
+// {id}
 const MyArticle = () => {
     const dispatch = useDispatch()
 

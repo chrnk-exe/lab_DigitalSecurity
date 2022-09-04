@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
-import App from './components/App';
+import AppRoutes from './components/AppRoutes';
 import { Provider } from 'react-redux'
 import { store } from './data/store';
 import { BrowserRouter } from 'react-router-dom'
@@ -11,7 +11,7 @@ root.render(
   // <React.StrictMode>
   <Provider store={store}>
     <BrowserRouter window={window}>
-      <App />
+      <AppRoutes />
     </BrowserRouter>
   </Provider>
   /* </React.StrictMode> */
