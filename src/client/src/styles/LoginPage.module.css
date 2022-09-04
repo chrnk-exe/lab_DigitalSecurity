@@ -116,6 +116,7 @@ h2 {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin-top: 10px;
     width: 100%;
 }
 
@@ -128,7 +129,7 @@ h2 {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-top:5px;
+    margin-top:10px;
 }
 
 .link {
