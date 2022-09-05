@@ -1,12 +1,17 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux/es/exports'
+import Button from '@mui/material/Button'
 
 import Loader from './Loader'
 import { setArticleState, setComments } from '../data/articlesReducer'
 import host from '../data/host'
 
 import CommentItem from './CommentItem'
+import SignButtons from '../UI/SignButtons'
+import greenTheme from '../UI/theme'
+import formatDate from '../assets/formatDate'
+// import onEnterPress from '../assets/onEnterPress'
 import adminPic from '../assets/admin.jpg'
 import userPic from '../assets/user.jpg'
 import classes from '../styles/MyArticle.module.css'
@@ -25,11 +30,6 @@ const MyArticle = () => {
 
     const [comment, setComment] = useState('')
 
-    const formatDate = (date) => {
-      let ldate = new Date(date)
-      return [ldate.getFullYear(), ldate.getMonth()+1, ldate.getDate()].join('-')
-  }
-
     const sendCommentHandler = (e) => {
       e.preventDefault()
       const randId = Date.now()
@@ -40,7 +40,7 @@ const MyArticle = () => {
         },
         body: JSON.stringify({name: userName, admin: userIsAdmin, body: comment, 'postId': id, 'id': userid})
       })
-      dispatch(setComments([...comments, {'articleid': id, id: randId, body: comment, name: userName}]))
+      dispatch(setComments([...comments, {'articleid': id, id: randId, body: comment, name: userName, isadmin: userIsAdmin}]))
     }
 
     useEffect(() => {
@@ -57,12 +57,22 @@ const MyArticle = () => {
       fetchData(id)
     }, [id])
 
+    const onEnterPress = async (e) => {
+      if(e.code === 'Enter'){
+          sendCommentHandler(e)
+          setComment('')
+      }
+  }
+
   return (
     <div className={classes.articlePage}>
+
       <article className={classes.articleContainer}>
+
         <header className={classes.articleHeader}>
           <h1>{currentArticle?.title}</h1>
         </header>
+
         <main>
           <p>Date of creation: {formatDate(currentArticle?.date_of_creation)} / created by <span className={classes.greenSpan}>Ivan Kotov</span></p>
           <div>
@@ -71,25 +81,32 @@ const MyArticle = () => {
             </pre>
           </div>
         </main>
+
         <footer className={classes.footer}>
           <header>
             Comments
           </header>
           <div className={classes.comments}>
             {comments 
-            ? comments.map((comment, index) => <CommentItem key={index} name={comment.name} email={comment.email} body={comment.body} />)
+            ? comments.map((comment, index) => <CommentItem key={index} name={comment.name} email={comment.email} body={comment.body} isadmin={comment.isadmin}/>)
             : <Loader />}
           </div>
           <div className={classes.commentArea}>
             Leave your comment here!
             <div className={commentItemStyles.CommentItem}>
                 <img style={{borderRadius: '5px'}} src={userIsAdmin ? adminPic : userPic} width={80} height={80} alt=''/>
-                <div className={commentItemStyles.content}>
-                    <div className={commentItemStyles.names}><h2>{userName}</h2></div>
-                    <textarea value={comment} onChange={e => setComment(e.target.value)} className={classes.textArea} cols={65} rows={5}/>
+                <div className={commentItemStyles.content}>                      
+                    <div className={commentItemStyles.names}><h2>{userid !== -1 ? userName : "Comments can be posted only by authorized users!"}</h2></div>
+                    {
+                      userid !== -1
+                      ?<textarea value={comment} onChange={e => setComment(e.target.value)} onKeyDown={onEnterPress} className={classes.textArea} cols={65} rows={5}/>
+                      : <SignButtons theme={greenTheme} color={'secondary'}/>
+                    }
                 </div>
             </div>
-            <button disabled={userid === -1} onClick={sendCommentHandler} className={buttonStyles.LoginPageButton + ' ' + classes.ButtonFix}>Send your comment!</button>
+            <div className={classes.myArticleButton}>
+              <Button variant="contained" fullWidth disabled={userid === -1} onClick={sendCommentHandler}>Send your comment!</Button>
+            </div>
           </div>
         </footer>
       </article>
@@ -100,6 +117,7 @@ const MyArticle = () => {
         </header>
         <div>Coming soon...</div>
       </section>
+
     </div>
   )
 }

@@ -67,3 +67,8 @@ h1, h2, h3, h4, p {
 pre {
     font-size: 1.2em;
 }
+
+.myArticleButton {
+    margin-top: 20px;
+    width: 100%;
+}

@@ -7,6 +7,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import LoginIcon from '@mui/icons-material/LoginOutlined';
 import LogoutIcon from "@mui/icons-material/LogoutOutlined"
 
+import SignButtons from './SignButtons';
 import greenTheme from './theme';
 
 import classes from '../styles/Header.module.css'
@@ -31,24 +32,7 @@ const Header = () => {
                 <div className={classes.buttons}>
                     {
                         id === -1 
-                        ? <ButtonGroup variant="text" size="large">
-                            <Button 
-                                onClick={() => navigate('login/signin')} 
-                                style={{borderColor: "#45e7b1"}} 
-                                className={classes.buttons} 
-                                color="primary"
-                                size="large" 
-                                startIcon={<LoginIcon />}>
-                                    Sign in
-                            </Button>
-                            <Button 
-                                onClick={() => navigate('login/signup')} 
-                                className={classes.buttons} 
-                                color="primary"
-                                size="large">
-                                    Sign up
-                            </Button>
-                        </ButtonGroup>
+                        ? <SignButtons/>
                         :<Button 
                             onClick={() => {window.sessionStorage.clear(); window.location.reload()}} 
                             className={classes.buttons} 

@@ -1,12 +1,14 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux/es/exports'
+import { ThemeProvider, Button } from '@mui/material'
 
 import host from '../data/host'
 
 import styles from '../styles/ArticleCreator.module.css'
 import ButtonStyles from '../styles/LoginPage.module.css'
 import classes from '../styles/MyArticle.module.css'
+import greenTheme from '../UI/theme'
 
 
 const ArticleCreator = () => {
@@ -56,7 +58,9 @@ const ArticleCreator = () => {
                 </div>
               </main>
               <footer>
-                <button onClick={addNewArticle} className={ButtonStyles.LoginPageButton}>Post new article!</button>
+                <ThemeProvider theme={greenTheme}>
+                  <Button variant="contained" onClick={addNewArticle}>Post new article!</Button>
+                </ThemeProvider>
               </footer>
             </article>
       

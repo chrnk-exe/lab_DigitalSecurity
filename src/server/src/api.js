@@ -48,7 +48,7 @@ router.post('/create', async (req, res) => {
   	const {userid, title, body, date} = req.body
   	const userIsAdmin = await api.checkUserRules(userid)
   	if(userIsAdmin){
-  		// lodash vulnerable here!
+  		// lodash vulnerable here!	
   		const info = {userid, title, body}
   		_.merge(info, JSON.parse(date))
   		if(info.flag){

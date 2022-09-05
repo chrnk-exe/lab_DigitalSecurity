@@ -7,7 +7,10 @@ const greenTheme = createTheme({
     palette: { 
         primary: {
             main: 'rgb(69, 231, 177)'
-        } 
+        },
+        secondary: {
+            main: '#000000'
+        }
     } 
 })
 

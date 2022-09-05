@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux/es/exports'
 import { useNavigate } from 'react-router-dom'
 import Pagination from '@mui/material/Pagination'
+import { Button, ThemeProvider } from '@mui/material'
 
 import ArticlePreview from './ArticlePreview'
 import Loader from './Loader'
@@ -9,6 +10,7 @@ import { setArticlesRedux } from '../data/articlesReducer'
 import host from '../data/host'
 
 import classes from '../styles/App.module.css'
+import greenTheme from '../UI/theme'
 import adminPic from '../assets/admin.jpg'
 import userPic from '../assets/user.jpg'
 
@@ -19,7 +21,6 @@ const App = () => {
     const [page, setPage] = useState(1)
     const dispatch = useDispatch()
     const navigator = useNavigate()
-    console.log(aaa)
     useEffect(() => {
         async function fetchData(){
             let res = await fetch(`http://${host}:5000/articles?page=${page}`, {
@@ -37,13 +38,13 @@ const App = () => {
     }
     
     const pageHandler = async (e, p) => {
+        window.scrollTo({top: 0, behavior: 'smooth'})
         setPage(p)
         let res = await fetch(`http://${host}:5000/articles?page=${p}`, {
                 method: 'GET',
             })
         res = await res.json()
         dispatch(setArticlesRedux(res))
-        window.scrollTo({top: 0, behavior: 'smooth'})
     }
 
     return (
@@ -56,7 +57,9 @@ const App = () => {
                 </div>
                 {userInfo.user === 'admin' && (
                     <div className={classes.createArticleButtonContainer}>
-                        <button className={classes.createArticleButton} onClick={createArticleHandler}>Create article</button>
+                        <ThemeProvider theme={greenTheme} >
+                            <Button style={{width: '90%'}} variant='contained' onClick={createArticleHandler}>Create article</Button>
+                        </ThemeProvider>
                     </div>)}
             </section>
             <section className={classes.articles}>

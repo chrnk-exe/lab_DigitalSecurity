@@ -115,7 +115,7 @@ const LoginPage = () => {
                         <Checkbox /> <p>Remember me {'(Coming soon!)'}</p>
                     </div>
                     <div className={classes.textfield}>
-                        <Button onClick={authorizationHandler} variant={"contained"} fullWidth>Sign in</Button>
+                        <Button onClick={authorizationHandler} variant={"contained"} fullWidth>{sign === "signup" ? "Sign up" : "Sign in"}</Button>
                     </div>
                     <div className={[classes.underAuthButton].join(' ')}>
                         <Link className={classes.link} to={''}>Forgot password?</Link>

@@ -82,20 +82,20 @@ async function registerNewUser(login, password){
 }
 
 async function getAllArticles(page){
+    const count = (await Articles.findAll()).length
     let arr = []
-    for(let i = ((page * 10) - 9); i <= (page * 10); i++){
+    for(let i = count - ((page - 1) * 10); i >= count - ((page - 1) * 10) - 9; i--){
         arr.push(i)
     }
-    const count = await Articles.findAll()
     const articles = Articles.findAll({
         where:{
             id: arr
         },
         order: [
-            ['id', 'ASC']
+            ['id', 'DESC']
         ]
     }).then(toPlain)
-    let res = {articles: await articles, maxArticles: count.length}
+    let res = {articles: await articles, maxArticles: count}
     return res
 }
 
@@ -119,9 +119,9 @@ async function getComments(articleid){
             where: {
                 id: useridComments
             }, 
-            attributes: ['id', 'login']
+            attributes: ['id', 'login', 'isadmin']
         }).then(toPlain)
-        const comments = (await commentsPool).map(comment => ({...comment, name: names.find(name => name.id == comment.userid).login}))
+        const comments = (await commentsPool).map(comment => ({...comment, name: names.find(name => name.id == comment.userid).login, isadmin: names.find(name => name.id == comment.userid).isadmin}))
         return comments
 	} else {
 		return []
@@ -187,7 +187,6 @@ const checkUserRules = async (userid) => {
             id: userid
         }
     })
-    console.log(result)
 	return result[0].getDataValue('isadmin')
 }
 
