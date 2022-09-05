@@ -67,6 +67,14 @@ const LoginPage = () => {
             }
         }
     }
+
+    const colorHandler = () => {
+        if(sign === 'signin'){
+            return userIsValid || form.login.length === 0 ? "info" : "error"
+        } else {
+            return !userIsValid ? "info": 'error'
+        }
+    }
     return (
         <div className={classes.main}>
             <form>
@@ -79,7 +87,7 @@ const LoginPage = () => {
                         label="Username" 
                         required 
                         variant="outlined"
-                        color={userIsValid || form.login.length === 0 || sign === 'signup' ? "info" : "error"}
+                        color={colorHandler()}
                         value={form.login}
                         onChange={e => setForm({...form, login: e.target.value})}/>
                         {/* {!(userIsValid || form.login.length === 0)
