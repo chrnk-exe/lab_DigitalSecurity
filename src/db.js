@@ -209,8 +209,8 @@ const recoveryPassword = async (login, newPassword) => {
         where: {
             login
         }
-    })
-    return user[0].userpassword === newPassword
+    }).then(toPlain)
+    return user[0].userpassword == newPassword
 }
 
 module.exports.addArticle = addArticle
