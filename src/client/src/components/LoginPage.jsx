@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux/es/exports'
-import LockIcon from '@mui/icons-material/LockOutlined';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Checkbox from '@mui/material/Checkbox';
+// import LockIcon from '@mui/icons-material/LockOutlined';
+// import Button from '@mui/material/Button';
+// import TextField from '@mui/material/TextField';
+// import Checkbox from '@mui/material/Checkbox';
 
-import TextFieldPassword from '../UI/TextFieldPassword'
+// import TextFieldPassword from '../UI/TextFieldPassword'
+import SignIn from './SignIn';
+import SignUp from './SignUp';
+import RecoveryPage from './RecoveryPage';
 
 import { setAdmin, setUser } from '../data/userReducer'
 import host from '../data/host'
@@ -68,18 +71,27 @@ const LoginPage = () => {
         }
     }
 
-    const colorHandler = () => {
+    const loginColorHandler = () => {
         if(sign === 'signin'){
             return userIsValid || form.login.length === 0 ? "info" : "error"
-        } else {
+        } else if(sign === 'signup') {
             return !userIsValid ? "info": 'error'
+        } else {
+            return "info"
         }
     }
-    
+
     return (
         <div className={classes.main}>
             <form>
-                <div className={classes.form}>
+                {
+                    {
+                        signup: <SignUp form={form} setForm={setForm} authorizationHandler={authorizationHandler} userIsValid={userIsValid}/>,
+                        signin: <SignIn form={form} setForm={setForm} authorizationHandler={authorizationHandler} userIsValid={userIsValid}/>,
+                        recovery: <RecoveryPage form={form} setForm={setForm} authorizationHandler={authorizationHandler} userIsValid={userIsValid}/>
+                    }[sign]
+                }
+                {/* <div className={classes.form}>  
                     <LockIcon />
                     <h2>{sign === "signup" ? "Sign up" : "Sign in"}</h2>
                     <div className={classes.textfield}>
@@ -88,13 +100,9 @@ const LoginPage = () => {
                         label="Username" 
                         required 
                         variant="outlined"
-                        color={colorHandler()}
+                        color={loginColorHandler()}
                         value={form.login}
                         onChange={e => setForm({...form, login: e.target.value})}/>
-                        {/* {!(userIsValid || form.login.length === 0)
-                        ? <div>User doesnt exist</div>
-                        : null
-                        } */}
                     </div>
                     <div className={classes.textfield}>
                         <TextFieldPassword 
@@ -102,11 +110,11 @@ const LoginPage = () => {
                         rows={1}
                         variant="outlined" 
                         required            
-                        label="Password" 
+                        label={sign === 'recovery' ? 'Input your new password': 'Password'} 
                         value={form.password}
                         onChange={e => setForm({...form, password: e.target.value})}/>
                     </div>
-                    {sign === "signup" 
+                    {sign !== "signin" 
                     ? <div className={classes.textfield}>
                         <TextFieldPassword 
                         fullWidth            
@@ -127,13 +135,13 @@ const LoginPage = () => {
                         <Button onClick={authorizationHandler} variant={"contained"} fullWidth>{sign === "signup" ? "Sign up" : "Sign in"}</Button>
                     </div>
                     <div className={[classes.underAuthButton].join(' ')}>
-                        <Link className={classes.link} to={''}>Forgot password?</Link>
+                        <Link className={classes.link} to={'recovery'}>Forgot password?</Link>
                         {   sign !== 'signup'
                         ? <Link className={classes.link} to={'signup'}>Don't have an account? Sign Up</Link>
                         : <Link className={classes.link} to={'signin'}>Already have an account? Sign In</Link>
                         }
                     </div>
-                </div>
+                </div> */}
             </form>
         </div>
     )
