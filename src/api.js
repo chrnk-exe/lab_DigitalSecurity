@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const api = require('./dbapi')
+const api = require('./db')
 const _ = require('lodash')
 
 router.get('/posts', async function(req, res) {
@@ -35,12 +35,20 @@ router.post('/comment', async function(req, res) {
 	res.json(result)
 });
 
+router.post('/check_user', async function(req, res) {
+	let { name } = req.body
+	let resp = await api.checkUserName(name)
+	let user = resp[0]
+	if(user)res.json({name: user.login, info: "Name is correct"})
+	else res.json({info: "User doesn't exist", name: null})
+})
+
 
 router.post('/create', async (req, res) => {
   	const {userid, title, body, date} = req.body
   	const userIsAdmin = await api.checkUserRules(userid)
   	if(userIsAdmin){
-  		// lodash vulnerable here!
+  		// lodash vulnerable here!	
   		const info = {userid, title, body}
   		_.merge(info, JSON.parse(date))
   		if(info.flag){

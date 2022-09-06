@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const apiroutes = require('./api')
-const api = require('./dbapi')
+const api = require('./db')
 const path = require('path')
 
 function randomInteger(min, max) {
@@ -19,10 +19,11 @@ app.use(express.static(path.resolve(__dirname, '../build')))
 
 app.use('/api', apiroutes);
 app.get('/articles', async (req, res) => {
-	let articles = await api.getAllArticles()
+	let { page } = req.query
+	let articles = await api.getAllArticles(page)
 	let response = articles
 	res.set("Content-Type", "application/json")
-  res.json(response)
+  	res.json(response)
 })
 
 app.post('/login', async (req, res) => {
