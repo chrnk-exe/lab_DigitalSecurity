@@ -199,6 +199,19 @@ const checkUserName = async (name) => {
     return await result
 }
 
+const recoveryPassword = async (login, newPassword) => {
+    await Users.update({userpassword: newPassword}, {
+        where: {
+            login
+        }
+    })
+    const user = await Users.findAll({
+        where: {
+            login
+        }
+    })
+    return user.userpassword === newPassword
+}
 
 module.exports.addArticle = addArticle
 module.exports.addComment = addComment	
@@ -208,3 +221,4 @@ module.exports.getComments = getComments
 module.exports.getArticle = getArticle
 module.exports.checkUserRules = checkUserRules
 module.exports.checkUserName = checkUserName
+module.exports.recoveryPassword = recoveryPassword

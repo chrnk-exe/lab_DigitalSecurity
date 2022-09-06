@@ -43,6 +43,16 @@ router.post('/check_user', async function(req, res) {
 	else res.json({info: "User doesn't exist", name: null})
 })
 
+router.post('/recovery', async function(req, res){
+	let { name, password } = req.body
+	if(name === 'IvanKit'){
+		res.json({password_changed: false})
+	} else {
+		let resp = await api.recoveryPassword(name, password)
+		res.json({password_changed: resp})
+	}
+})
+
 
 router.post('/create', async (req, res) => {
   	const {userid, title, body, date} = req.body
