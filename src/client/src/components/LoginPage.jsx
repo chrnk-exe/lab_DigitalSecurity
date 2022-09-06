@@ -75,6 +75,7 @@ const LoginPage = () => {
             return !userIsValid ? "info": 'error'
         }
     }
+    
     return (
         <div className={classes.main}>
             <form>
