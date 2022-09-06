@@ -23,8 +23,9 @@ const RecoveryPage = ({form, setForm, authorizationHandler, userIsValid}) => {
                 },
                 body: JSON.stringify({name: form.login, password: form.password})
             })
-            if(response.password_changed){
+            if((await response.json()).password_changed){
                 alert('Password changed correctly!')
+                setForm({login: '', password: '', password2: ''})
                 navigate('signin')
             } else {
                 alert('Password change failed, please try again later!..')
