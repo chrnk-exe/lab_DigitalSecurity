@@ -210,7 +210,7 @@ const recoveryPassword = async (login, newPassword) => {
             login
         }
     })
-    return user.userpassword === newPassword
+    return user[0].userpassword === newPassword
 }
 
 module.exports.addArticle = addArticle
