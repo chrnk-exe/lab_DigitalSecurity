@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     title: DataTypes.TEXT,
     body: DataTypes.TEXT,
+    description: DataTypes.TEXT,
     date_of_creation: DataTypes.DATE,
     creatorid: DataTypes.INTEGER,
     comments: DataTypes.TEXT

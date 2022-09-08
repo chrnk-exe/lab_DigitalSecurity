@@ -150,14 +150,15 @@ async function addComment(userid, body, articleid){
 // addComment(1, 'VERY COOL ARTICLE BRO!', 1).then(() => console.log('comment send'))
 
 async function addArticle(info) {
-    const {userid, title, body, year, month, day} = info 
+    const {userid, title, body, year, month, day, description} = info 
     const date = new Date(`${year}, ${month}, ${day+1}`)
     Articles.create({
         creatorid: userid,
         title,
         body,
         comments: '[]',
-        date_of_creation: date
+        date_of_creation: date,
+        description
     })
 }
 
@@ -213,6 +214,20 @@ const recoveryPassword = async (login, newPassword) => {
     return user[0].userpassword == newPassword
 }
 
+const renameUser = async (id, name) => {
+    await Users.update({login: name}, {
+        where: {
+            id
+        }
+    })
+    const user = await Users.findAll({
+        where:{
+            login: name
+        }
+    }).then(toPlain)
+    return user[0].login == name
+}
+
 module.exports.addArticle = addArticle
 module.exports.addComment = addComment	
 module.exports.checkUser = checkUser		
@@ -222,3 +237,4 @@ module.exports.getArticle = getArticle
 module.exports.checkUserRules = checkUserRules
 module.exports.checkUserName = checkUserName
 module.exports.recoveryPassword = recoveryPassword
+module.exports.renameUser = renameUser
