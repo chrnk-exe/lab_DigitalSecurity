@@ -48,6 +48,7 @@ const MyArticle = () => {
         let resp = await fetch(`http://${host}:5000/api/posts?id=${id}`)
         if(resp.status === 200){
           resp = await resp.json()
+          console.log(resp)
           dispatch(setArticleState({
             articles: resp.data,
             comments: resp.comments
@@ -76,9 +77,10 @@ const MyArticle = () => {
         <main>
           <p>Date of creation: {formatDate(currentArticle?.date_of_creation)} / created by <span className={classes.greenSpan}>Ivan Kotov</span></p>
           <div>
-            <pre>
+            <div dangerouslySetInnerHTML={{__html:currentArticle.body}}/>
+            {/* <pre>
               {currentArticle?.body}
-            </pre>
+            </pre> */}
           </div>
         </main>
 

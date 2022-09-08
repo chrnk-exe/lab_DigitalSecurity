@@ -6,13 +6,16 @@ import { ThemeProvider, Button } from '@mui/material'
 import host from '../data/host'
 
 import styles from '../styles/ArticleCreator.module.css'
-import ButtonStyles from '../styles/LoginPage.module.css'
+// import ButtonStyles from '../styles/LoginPage.module.css'
 import classes from '../styles/MyArticle.module.css'
 import greenTheme from '../UI/theme'
+
+const TextEditor = React.lazy(() => import('../UI/TextEditor'))
 
 
 const ArticleCreator = () => {
     const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
     const [body, setBody] = useState('')
     const {id, user} = useSelector(state => state.user)
     const navigator = useNavigate()
@@ -25,8 +28,10 @@ const ArticleCreator = () => {
             title,
             body,
             userid: id,
-            date
+            date,
+            description
         }
+        console.log(requestBody)
         // const resp = 
             await fetch(`http://${host}:5000/api/create`, {
             method: 'POST',
@@ -49,12 +54,13 @@ const ArticleCreator = () => {
               <header className={classes.articleHeader}>
                 <h1>Title: <input className={styles.title} placeholder='Awesome title!' value={title} onChange={e => setTitle(e.target.value)}/></h1>
               </header>
+              <div>
+                <h2>Short article description</h2>
+                <textarea rows={3} cols={60} value={description} onChange={e => setDescription(e.target.value)} placeholder='description'></textarea>
+              </div>
               <main>
-                {/* <p>Date of creation: {currentArticle?.date} / created by <span className={classes.greenSpan}>Ivan Kotov</span></p> */}
                 <div>
-                  <pre>
-                    <textarea className={styles.body} value={body} onChange={e => setBody(e.target.value)} cols={80} rows={10} />
-                  </pre>
+                    <TextEditor setText={setBody}/>
                 </div>
               </main>
               <footer>

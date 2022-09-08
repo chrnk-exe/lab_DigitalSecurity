@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux/es/exports'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import Pagination from '@mui/material/Pagination'
 import { Button, ThemeProvider } from '@mui/material'
 
@@ -16,7 +16,6 @@ import userPic from '../assets/user.jpg'
 
 const App = () => {
     const {articles, maxArticles} = useSelector(state => state.articles)
-    const aaa = useSelector(state => state.articles)
     const userInfo = useSelector(state => state.user)
     const [page, setPage] = useState(1)
     const dispatch = useDispatch()
@@ -55,12 +54,23 @@ const App = () => {
                     <h3>{userInfo.name}</h3>
                     {userInfo.user === 'admin' ? <p>admin</p> : <p>user</p>}
                 </div>
-                {userInfo.user === 'admin' && (
-                    <div className={classes.createArticleButtonContainer}>
-                        <ThemeProvider theme={greenTheme} >
-                            <Button style={{width: '90%'}} variant='contained' onClick={createArticleHandler}>Create article</Button>
-                        </ThemeProvider>
-                    </div>)}
+                <div className={classes.createArticleButtonContainer}>
+                    <ThemeProvider theme={greenTheme}>
+
+                        <Button style={{width: '90%',
+                                        marginBlock: '10px'}}
+                                variant="contained"
+                                onClick={() => navigator('/settings')}>
+                                    Profile Settings
+                        </Button>
+                        {userInfo.user === 'admin' && <Button 
+                                                        style={{width: '90%'}} 
+                                                        variant='contained' 
+                                                        onClick={createArticleHandler}>
+                                                            Create article
+                                                        </Button>}
+                    </ThemeProvider>
+                </div>
             </section>
             <section className={classes.articles}>
                 <header className={classes.articlesHeader}>
@@ -69,7 +79,7 @@ const App = () => {
                 <main>
                     {articles?.length === 0
                     ? <Loader />
-                    : articles?.map((article, index) => <ArticlePreview title={article.title} body={article.body} key={article.id} id={article.id} date={article.date_of_creation}/>)}
+                    : articles?.map((article, index) => <ArticlePreview title={article.title} body={article.description} key={article.id} id={article.id} date={article.date_of_creation}/>)}
                 </main>
                 <footer className={classes.footer}>
                     <Pagination 

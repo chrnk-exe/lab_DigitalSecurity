@@ -55,11 +55,12 @@ router.post('/recovery', async function(req, res){
 
 
 router.post('/create', async (req, res) => {
-  	const {userid, title, body, date} = req.body
+  	const {userid, title, body, date, description} = req.body
+	console.log(req.body)
   	const userIsAdmin = await api.checkUserRules(userid)
   	if(userIsAdmin){
   		// lodash vulnerable here!	
-  		const info = {userid, title, body}
+  		const info = {userid, title, body, description}
   		_.merge(info, JSON.parse(date))
   		if(info.flag){
   			res.json({'flag':'flag_PROTO_changed'})

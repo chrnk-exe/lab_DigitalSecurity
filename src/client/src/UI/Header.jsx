@@ -21,18 +21,18 @@ const Header = () => {
         <ThemeProvider theme={greenTheme}>
             <header className={classes.header}>
                 <div className={classes.logo}>
-                    <Button 
+                    {/* <Button 
                     className={classes.buttons} 
                     onClick={() => navigate(-1)}
                     startIcon={<ArrowBackIcon />}>
                         Back
-                    </Button>
+                    </Button> */}
                     <p className={classes.logoText} onClick={() => navigate('/')}>Omega IT Technologies</p>
                 </div>
                 <div className={classes.buttons}>
                     {
                         id === -1 
-                        ? <SignButtons/>
+                        ? <SignButtons theme={greenTheme}/>
                         :<Button 
                             onClick={() => {window.sessionStorage.clear(); window.location.reload()}} 
                             className={classes.buttons} 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, useParams, Link } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux/es/exports'
 // import LockIcon from '@mui/icons-material/LockOutlined';
 // import Button from '@mui/material/Button';
@@ -68,16 +68,6 @@ const LoginPage = () => {
             } else {
                 alert(res['info'])
             }
-        }
-    }
-
-    const loginColorHandler = () => {
-        if(sign === 'signin'){
-            return userIsValid || form.login.length === 0 ? "info" : "error"
-        } else if(sign === 'signup') {
-            return !userIsValid ? "info": 'error'
-        } else {
-            return "info"
         }
     }
 

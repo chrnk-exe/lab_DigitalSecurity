@@ -7,7 +7,8 @@ module.exports = {
     for(let i = 1; i < 23; i++){
       mockup.push({
         title: `Cool article №${i}!`,
-        body: `Cool article №${i} body! AAAAAAAAAAAAAAAAA`,
+        body: `AAAAAAAAAAAAAAAAA`,
+        description: `Cool article №${i} description!`,
         date_of_creation: new Date(),
         creatorid: '1',
         comments: '[]',
