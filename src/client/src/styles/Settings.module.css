@@ -1,0 +1,22 @@
+.Settings {
+    /* border: 1px solid black; */
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    width: 700px;
+}
+
+/* .userCard {
+    max-width: 300px;
+} */
+
+.SettingsTextFields {
+    background-color: inherit;
+    box-shadow: none;
+}
+
+.TextField {
+    background-color: #ffffff;
+    border-radius: 5px;
+    margin-block: 5px;
+}

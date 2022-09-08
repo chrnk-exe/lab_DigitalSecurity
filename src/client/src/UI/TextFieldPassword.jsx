@@ -14,7 +14,7 @@ const TextFieldPassword = (props) => {
                         <IconButton
                             onClick={() => setShowPassword(!showPassword)}
                             edge="end">
-                            {!showPassword ? <Visibility /> : <VisibilityOff/>}
+                            {!showPassword ? <Visibility style={{width: "24px", height: "24px"}}/> : <VisibilityOff style={{width: "24px", height: "24px"}}/>}
                         </IconButton>
                     </InputAdornment>
                 )
