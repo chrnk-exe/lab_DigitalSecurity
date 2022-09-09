@@ -3,15 +3,12 @@ import { useSelector } from 'react-redux/es/exports';
 import { useNavigate } from 'react-router'
 import { ThemeProvider } from '@mui/material'
 import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import LoginIcon from '@mui/icons-material/LoginOutlined';
 import LogoutIcon from "@mui/icons-material/LogoutOutlined"
 
 import SignButtons from './SignButtons';
 import greenTheme from './theme';
 
 import classes from '../styles/Header.module.css'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const Header = () => {
     const {id} = useSelector(state => state.user)

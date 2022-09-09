@@ -16,7 +16,6 @@ import adminPic from '../assets/admin.jpg'
 import userPic from '../assets/user.jpg'
 import classes from '../styles/MyArticle.module.css'
 import commentItemStyles from '../styles/CommentItem.module.css'
-import buttonStyles from '../styles/LoginPage.module.css'
 
 // {id}
 const MyArticle = () => {
@@ -77,7 +76,7 @@ const MyArticle = () => {
         <main>
           <p>Date of creation: {formatDate(currentArticle?.date_of_creation)} / created by <span className={classes.greenSpan}>Ivan Kotov</span></p>
           <div>
-            <div dangerouslySetInnerHTML={{__html:currentArticle.body}}/>
+            <div className={classes.articleBody} dangerouslySetInnerHTML={{__html:currentArticle.body}}/>
             {/* <pre>
               {currentArticle?.body}
             </pre> */}
@@ -96,7 +95,7 @@ const MyArticle = () => {
           <div className={classes.commentArea}>
             Leave your comment here!
             <div className={commentItemStyles.CommentItem}>
-                <img style={{borderRadius: '5px'}} src={userIsAdmin ? adminPic : userPic} width={80} height={80} alt=''/>
+                <img style={{display: userid === -1 ? 'none' : 'block' ,borderRadius: '5px'}} src={userIsAdmin ? adminPic : userPic} width={80} height={80} alt=''/>
                 <div className={commentItemStyles.content}>                      
                     <div className={commentItemStyles.names}><h2>{userid !== -1 ? userName : "Comments can be posted only by authorized users!"}</h2></div>
                     {

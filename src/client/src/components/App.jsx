@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux/es/exports'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Pagination from '@mui/material/Pagination'
 import { Button, ThemeProvider } from '@mui/material'
 

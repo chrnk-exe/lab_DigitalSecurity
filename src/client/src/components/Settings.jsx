@@ -93,7 +93,7 @@ const Settings = () => {
                     <h2>Change your username</h2>
                     <div className={classes.TextField}>
                         <TextField 
-                            color={(!nameIsValid || form.username === name) && form.username.length != 0 ? "info" : "error"} 
+                            color={(!nameIsValid || form.username === name) && form.username.length !== 0 ? "info" : "error"} 
                             style={{fontSize: '1.2em'}} 
                             fullWidth 
                             placeholder={name}
@@ -101,7 +101,7 @@ const Settings = () => {
                             onChange={e => setForm({...form, username: e.target.value})}/>
                     </div>
                     <Button 
-                            disabled={!(!nameIsValid || form.username === name) || form.username.length == 0} 
+                            disabled={!(!nameIsValid || form.username === name) || form.username.length === 0} 
                             variant="contained"
                             onClick={changeNameHandler}>
                         Change username

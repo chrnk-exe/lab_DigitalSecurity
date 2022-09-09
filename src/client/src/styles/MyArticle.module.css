@@ -72,3 +72,10 @@ pre {
     margin-top: 20px;
     width: 100%;
 }
+
+.articleBody {
+    display: grid;
+    gap: 25px;
+    /* flex-direction: column; */
+    /* justify-content: space-evenly; */
+}
