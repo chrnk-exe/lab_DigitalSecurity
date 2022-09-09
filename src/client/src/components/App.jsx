@@ -13,6 +13,7 @@ import classes from '../styles/App.module.css'
 import greenTheme from '../UI/theme'
 import adminPic from '../assets/admin.jpg'
 import userPic from '../assets/user.jpg'
+import logo from '../assets/Omega.png'
 
 const App = () => {
     const {articles, maxArticles} = useSelector(state => state.articles)
@@ -56,7 +57,6 @@ const App = () => {
                 </div>
                 <div className={classes.createArticleButtonContainer}>
                     <ThemeProvider theme={greenTheme}>
-
                         <Button style={{width: '90%',
                                         marginBlock: '10px'}}
                                 variant="contained"
@@ -74,8 +74,10 @@ const App = () => {
             </section>
             <section className={classes.articles}>
                 <header className={classes.articlesHeader}>
+                    <img className={classes.logo} src={logo} height={80} width={80} alt=''/>
                     <h1>{'Omega IT Technologies news!'}</h1>
                 </header>
+                <div className={classes.Divider}></div>
                 <main>
                     {articles?.length === 0
                     ? <Loader />
