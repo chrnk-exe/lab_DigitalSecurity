@@ -34,7 +34,7 @@ const ArticlePreview = ({title, body, id, date}) => {
             <h2>{title}</h2>
         </header>
         <div className={classes.divider}>
-            <p>{formatDate(date)} / by <span>{'Ivan Kit'}</span></p>
+            <p>{formatDate(date)} / by <span>{'admin'}</span></p>
         </div>
         <article>
             <p>{body}</p>

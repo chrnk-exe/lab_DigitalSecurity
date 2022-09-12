@@ -74,7 +74,7 @@ router.post('/create', async (req, res) => {
   		_.merge(info, JSON.parse(date))
   		if(info.flag){
 			info.flag = undefined
-  			res.json({'flag':'Привет_настя!'})
+  			res.json({'flag':'fl@g_Pro0toTyp3_1s_p0llu1ed!'})
   		} else {
   			const result = api.addArticle(info)
   			res.json({status:true, 'info': 'article created'})

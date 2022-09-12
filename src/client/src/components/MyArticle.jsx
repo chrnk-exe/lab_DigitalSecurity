@@ -74,7 +74,7 @@ const MyArticle = () => {
         </header>
 
         <main>
-          <p>Date of creation: {formatDate(currentArticle?.date_of_creation)} / created by <span className={classes.greenSpan}>Ivan Kotov</span></p>
+          <p>Date of creation: {formatDate(currentArticle?.date_of_creation)} / created by <span className={classes.greenSpan}>admin</span></p>
           <div>
             <div className={classes.articleBody} dangerouslySetInnerHTML={{__html:currentArticle.body}}/>
             {/* <pre>
