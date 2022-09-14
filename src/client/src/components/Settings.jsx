@@ -88,6 +88,7 @@ const Settings = () => {
             <ThemeProvider theme={greenTheme}>
                 <section className={classes.userCard}>
                     <img height={300} src={user === 'admin' ? adminPic : userPic } alt=''/>
+                    <p>User ID: {id}</p>
                 </section>
                 <section className={classes.SettingsTextFields}>
                     <h2>Change your username</h2>

@@ -79,3 +79,7 @@ pre {
     /* flex-direction: column; */
     /* justify-content: space-evenly; */
 }
+
+.articleContainerItem {
+    margin-top: 10px;
+}

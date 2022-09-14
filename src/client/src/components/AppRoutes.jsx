@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react'
+import React, {Suspense, useEffect} from 'react'
 import {
   Routes,
   Route
@@ -11,10 +11,32 @@ import MyArticle from './MyArticle';
 import Header from '../UI/Header';
 import Loader from './Loader';
 import Settings from './Settings';
+import { useDispatch } from 'react-redux/es/exports';
 
 import classes from '../styles/AppRoutes.module.css'
+import host from '../data/host';
+import { setAdmin, setUser } from '../data/userReducer';
 
 function AppRoutes() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const fetchDate = async () => {
+      let res = await fetch(`http://${host}:5000/authorize`, {
+        credentials: "include",
+      })
+      res = await res.json()
+      if(res['info']){
+        res['isadmin'] ? dispatch(setAdmin({name: res['login'], id: res['id']})) : dispatch(setUser({name: res['login'], id: res['id']}))
+      }
+      console.log(res)
+      console.log(document.cookie)
+      
+    }
+
+    fetchDate()
+  }, [])
+
   return (
     <div className={classes.App}>
       <Header/>

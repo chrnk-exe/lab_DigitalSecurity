@@ -47,7 +47,7 @@ const SignUp = ({form, setForm, authorizationHandler, userIsValid}) => {
                 onChange={e => setForm({...form, password2: e.target.value})}/>
             </div>
             <div className={classes.checkboxContainer}>
-                <Checkbox /> <p>Remember me {'(Coming soon!)'}</p>
+                <Checkbox checked={form.rememberMe} onChange={() => setForm({...form, rememberMe: !form.rememberMe})}/> <p>Remember me</p>
             </div>
             <div className={classes.textfield}>
                 <Button onClick={authorizationHandler} variant={"contained"} fullWidth>Sign up</Button>

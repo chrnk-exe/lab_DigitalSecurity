@@ -112,7 +112,7 @@ const MyArticle = () => {
         </footer>
       </article>
 
-      <section className={classes.suggestedPosts}>
+      <section className={classes.suggestedPosts} style={{visibility: 'hidden'}}>
         <header>
           Suggested posts!
         </header>

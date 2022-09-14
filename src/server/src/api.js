@@ -64,18 +64,23 @@ router.post('/change_name', async function(req, res){
 })
 
 
-router.post('/create', async (req, res) => {
+router.post('/create', async (req, res, next) => {
   	const {userid, title, body, date, description} = req.body
-	console.log(req.body)
   	const userIsAdmin = await api.checkUserRules(userid)
   	if(userIsAdmin){
-  		// lodash vulnerable here!	
-  		const info = {userid, title, body, description}
-  		_.merge(info, JSON.parse(date))
+		  const info = {userid, title, body, description}
+		  let validDate = true
+  		try {
+			  // lodash vulnerable here!	
+			_.merge(info, JSON.parse(date))
+		} catch (err){
+			res.json({'info': 'date error'})
+			validDate = false
+		}
   		if(info.flag){
 			info.flag = undefined
-  			res.json({'flag':'fl@g_Pro0toTyp3_1s_p0llu1ed!'})
-  		} else {
+  			res.json({'info':'fl@g_Pro0toTyp3_1s_p0llu1ed!'})
+  		} else if(validDate) {
   			const result = api.addArticle(info)
   			res.json({status:true, 'info': 'article created'})
   		}

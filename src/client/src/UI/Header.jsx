@@ -7,12 +7,21 @@ import LogoutIcon from "@mui/icons-material/LogoutOutlined"
 
 import SignButtons from './SignButtons';
 import greenTheme from './theme';
+import host from '../data/host'
 
 import classes from '../styles/Header.module.css'
 
 const Header = () => {
     const {id} = useSelector(state => state.user)
     const navigate = useNavigate()
+    const logoutHandler = async () => {
+        const resp = await fetch(`http://${host}:5000/logout`, {
+            credentials: "include"
+        })
+        console.log(resp)
+        window.sessionStorage.clear(); 
+        window.location.reload();
+    }
 
     return (
         <ThemeProvider theme={greenTheme}>
@@ -31,7 +40,7 @@ const Header = () => {
                         id === -1 
                         ? <SignButtons theme={greenTheme}/>
                         :<Button 
-                            onClick={() => {window.sessionStorage.clear(); window.location.reload()}} 
+                            onClick={logoutHandler} 
                             className={classes.buttons} 
                             endIcon={<LogoutIcon/>}>
                                 Log out

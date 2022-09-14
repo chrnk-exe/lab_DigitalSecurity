@@ -7,7 +7,7 @@ import userPic from '../assets/user.jpg'
 import classes from '../styles/CommentItem.module.css'
 
 const CommentItem = ({name, body, isadmin}) => {
-  flagHandler(body)
+  // flagHandler(body)
   return (
     <div className={classes.CommentItem}>
         <img style={{borderRadius: '5px'}} src={isadmin ? adminPic : userPic} width={80} height={80} alt=''/>

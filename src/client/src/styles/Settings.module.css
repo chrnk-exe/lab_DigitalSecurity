@@ -10,6 +10,14 @@
     max-width: 300px;
 } */
 
+.userCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 5px;
+}
+
 .SettingsTextFields {
     background-color: inherit;
     box-shadow: none;

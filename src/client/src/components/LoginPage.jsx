@@ -21,7 +21,8 @@ const LoginPage = () => {
     const [form, setForm] = useState({
         login: '',
         password: '',
-        password2: ''
+        password2: '',
+        rememberMe: false
     })
     const [userIsValid, setUserValid] = useState(false)
     const userName = useDebounce(form.login, 350)
@@ -54,6 +55,7 @@ const LoginPage = () => {
                 headers: {
                     'Content-Type' : 'application/json'
                 },
+                credentials: "include",
                 body: JSON.stringify(form)
             })
             res = await res.json()

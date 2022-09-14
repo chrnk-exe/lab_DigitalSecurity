@@ -1,8 +1,16 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux/es/exports'
-import { ThemeProvider, Button } from '@mui/material'
+import { 
+  ThemeProvider, 
+  Button, 
+  Select, 
+  MenuItem, 
+  TextField, 
+  InputLabel 
+} from '@mui/material'
 
+import formatDate from '../assets/formatDate'
 import host from '../data/host'
 
 import styles from '../styles/ArticleCreator.module.css'
@@ -17,13 +25,19 @@ const ArticleCreator = () => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [body, setBody] = useState('')
+    const [customDate, setCustomDate] = useState('')
+    const [showDateInput, setShowDateInput] = useState(false)
     const {id, user} = useSelector(state => state.user)
     const navigator = useNavigate()
 
     const addNewArticle = async (e) => {
         e.preventDefault()
         let date = new Date()
-	      date = `{"year": ${date.getFullYear()}, "month": ${date.getMonth()+1}, "day": ${date.getDate()}}`
+        if(showDateInput){
+          date = customDate
+        } else {
+          date = `{"year": ${date.getFullYear()}, "month": ${date.getMonth()+1}, "day": ${date.getDate()}}`
+        }
         const requestBody = {
             title,
             body,
@@ -31,8 +45,7 @@ const ArticleCreator = () => {
             date,
             description
         }
-        console.log(requestBody)
-        // const resp = 
+        const resp = 
             await fetch(`http://${host}:5000/api/create`, {
             method: 'POST',
             headers: {
@@ -40,7 +53,13 @@ const ArticleCreator = () => {
             },
             body: JSON.stringify(requestBody)
         })
-        navigator('/')
+        const respBody = await resp.json()
+        alert(respBody.info)
+        if(respBody !== 'date error')navigator('/')
+    }
+
+    const handleInput = e => {
+      setShowDateInput(e.target.value)
     }
 
     if(user !== 'admin') {
@@ -51,26 +70,39 @@ const ArticleCreator = () => {
         return (
             <div className={classes.articlePage}>
             <article className={classes.articleContainer}>
-              <header className={classes.articleHeader}>
+              <header className={[classes.articleHeader, classes.articleContainerItem].join(' ')}>
                 <h1>Title: <input className={styles.title} placeholder='Awesome title!' value={title} onChange={e => setTitle(e.target.value)}/></h1>
               </header>
-              <div>
+              <div className={classes.articleContainerItem}>
                 <h2>Short article description</h2>
                 <textarea rows={3} cols={60} value={description} onChange={e => setDescription(e.target.value)} placeholder='description'></textarea>
               </div>
-              <main>
+              <div className={classes.articleContainerItem}>
+                <InputLabel id="date-label">Date</InputLabel>
+                <Select labelId={'date-label'} defaultValue={false} onChange={handleInput}>
+                  <MenuItem value={false}>Auto</MenuItem>
+                  <MenuItem value={true}>Input</MenuItem>
+                </Select>
+                <TextField 
+                  disabled={!showDateInput} 
+                  placeholder={formatDate(new Date())} 
+                  style={{marginLeft: '10px'}} 
+                  value={showDateInput ? customDate : formatDate(new Date())} 
+                  onChange={e => setCustomDate(e.target.value)}/>
+              </div>
+              <main className={classes.articleContainerItem}>
                 <div>
                     <TextEditor setText={setBody}/>
                 </div>
               </main>
-              <footer>
+              <footer className={classes.articleContainerItem}>
                 <ThemeProvider theme={greenTheme}>
                   <Button variant="contained" onClick={addNewArticle}>Post new article!</Button>
                 </ThemeProvider>
               </footer>
             </article>
       
-            <section className={classes.suggestedPosts}>
+            <section className={classes.suggestedPosts} style={{visibility: 'hidden'}}>
               <header>
                 Choose suggested posts
               </header>
