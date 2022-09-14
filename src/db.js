@@ -228,6 +228,15 @@ const renameUser = async (id, name) => {
     return user[0].login == name
 }
 
+const getUser = async (id) => {
+    const user = await Users.findAll({
+        where:{
+            id
+        }
+    }).then(toPlain)
+    return user[0]
+}
+
 module.exports.addArticle = addArticle
 module.exports.addComment = addComment	
 module.exports.checkUser = checkUser		
@@ -238,3 +247,4 @@ module.exports.checkUserRules = checkUserRules
 module.exports.checkUserName = checkUserName
 module.exports.recoveryPassword = recoveryPassword
 module.exports.renameUser = renameUser
+module.exports.getUser = getUser
