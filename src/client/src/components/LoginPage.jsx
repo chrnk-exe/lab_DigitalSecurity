@@ -22,7 +22,7 @@ const LoginPage = () => {
         login: '',
         password: '',
         password2: '',
-        rememberMe: false
+        rememberMe: true
     })
     const [userIsValid, setUserValid] = useState(false)
     const userName = useDebounce(form.login, 350)

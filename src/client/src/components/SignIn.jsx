@@ -34,9 +34,9 @@ const SignIn = ({form, setForm, authorizationHandler, userIsValid}) => {
                 value={form.password}
                 onChange={e => setForm({...form, password: e.target.value})}/>
             </div>
-            <div className={classes.checkboxContainer}>
+            {/* <div className={classes.checkboxContainer}>
                 <Checkbox checked={form.rememberMe} onChange={() => setForm({...form, rememberMe: !form.rememberMe})}/> <p>Remember me</p>
-            </div>
+            </div> */}
             <div className={classes.textfield}>
                 <Button onClick={authorizationHandler} variant={"contained"} fullWidth>Sign in</Button>
             </div>
