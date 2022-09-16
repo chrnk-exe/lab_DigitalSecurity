@@ -57,6 +57,9 @@ app.get('/authorize', async (req, res) => {
 			'auth': true,
 			...user
 		}
+		if(user.isadmin){
+			result.flag = "flag_@dm1n_account"
+		}
 	}
 	// console.log(uid, result)
 	res.json(result)
@@ -67,6 +70,9 @@ app.post('/login', async (req, res) => {
 	let result = await api.checkUser(login, password)
 	if(rememberMe){
 		req.session.session_token = result.userid
+	}
+	if(result.isadmin){
+		result.flag = 'flag_@dm1n_account'
 	}
 	// let sessionToken = randomUUID()
 	// res.cookie("session_tokenn", sessionToken, {sameSite: 'none', secure: true, httpOnly:false})
