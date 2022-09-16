@@ -1,17 +1,17 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme } from '@mui/material/styles';
 
-const greenTheme = createTheme({ 
+const greenTheme = createTheme({
     typography: {
-        fontSize: '1em'
+        fontSize: '1em',
     },
-    palette: { 
+    palette: {
         primary: {
-            main: 'rgb(69, 231, 177)'
+            main: 'rgb(69, 231, 177)',
         },
         secondary: {
-            main: '#000000'
-        }
-    } 
-})
+            main: '#000000',
+        },
+    },
+});
 
 export default greenTheme;

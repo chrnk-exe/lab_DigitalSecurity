@@ -1,10 +1,8 @@
-import React from 'react'
-import classes from '../styles/Loader.module.css'
+import React from 'react';
+import classes from '../styles/Loader.module.css';
 
 const Loader = () => {
-    return (
-        <div className={classes.ldsDualDing}>.</div>
-    )
-}
+    return <div className={classes.ldsDualDing}>.</div>;
+};
 
-export default Loader
+export default Loader;
