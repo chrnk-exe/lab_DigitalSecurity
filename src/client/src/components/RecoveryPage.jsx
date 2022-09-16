@@ -16,7 +16,7 @@ const RecoveryPage = ({form, setForm, authorizationHandler, userIsValid}) => {
 
     const resetPasswordHandler = async () => {
         if(form.password === form.password2){
-            const response = await fetch(`http://${host}:5000/api/recovery`, {
+            const response = await fetch(`http://${host}/api/recovery`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

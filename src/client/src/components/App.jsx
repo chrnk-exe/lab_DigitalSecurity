@@ -23,7 +23,7 @@ const App = () => {
     const navigator = useNavigate()
     useEffect(() => {
         async function fetchData(){
-            let res = await fetch(`http://${host}:5000/articles?page=${page}`, {
+            let res = await fetch(`http://${host}/articles?page=${page}`, {
                 method: 'GET',
             })
             res = await res.json()

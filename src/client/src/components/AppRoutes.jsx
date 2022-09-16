@@ -22,7 +22,7 @@ function AppRoutes() {
 
   useEffect(() => {
     const fetchDate = async () => {
-      let res = await fetch(`http://${host}:5000/authorize`, {
+      let res = await fetch(`http://${host}/authorize`, {
         credentials: "include",
       })
       res = await res.json()

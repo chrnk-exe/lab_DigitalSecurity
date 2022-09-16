@@ -27,7 +27,7 @@ const Settings = () => {
 
     useEffect( () => {
         const fetchName = async () => {
-            let resp = await fetch(`http://${host}:5000/api/check_user`, {
+            let resp = await fetch(`http://${host}/api/check_user`, {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json'
@@ -41,7 +41,7 @@ const Settings = () => {
 
     const changeNameHandler = async () => {
         if(!nameIsValid){
-            const response = await fetch(`http://${host}:5000/api/change_name`, {
+            const response = await fetch(`http://${host}/api/change_name`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ const Settings = () => {
 
     const resetPasswordHandler = async () => {
         if(form.password === form.password2){
-            const response = await fetch(`http://${host}:5000/api/recovery`, {
+            const response = await fetch(`http://${host}/api/recovery`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

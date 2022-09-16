@@ -46,7 +46,7 @@ const ArticleCreator = () => {
             description
         }
         const resp = 
-            await fetch(`http://${host}:5000/api/create`, {
+            await fetch(`http://${host}/api/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

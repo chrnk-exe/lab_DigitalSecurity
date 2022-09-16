@@ -32,7 +32,7 @@ const LoginPage = () => {
 
     useEffect(() => {
         const fetchName = async() => {
-            let resp = await fetch(`http://${host}:5000/api/check_user`, {
+            let resp = await fetch(`http://${host}/api/check_user`, {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json'
@@ -49,7 +49,7 @@ const LoginPage = () => {
         if((form.password === form.password2 && sign === "signup") || 
             (userIsValid && sign === "signin"))
             {
-            let res = await fetch(`http://${host}:5000/login`, {
+            let res = await fetch(`http://${host}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json'

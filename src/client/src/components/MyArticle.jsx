@@ -44,7 +44,7 @@ const MyArticle = () => {
 
     useEffect(() => {
       const fetchData = async (id) => {
-        let resp = await fetch(`http://${host}:5000/api/posts?id=${id}`)
+        let resp = await fetch(`http://${host}/api/posts?id=${id}`)
         if(resp.status === 200){
           resp = await resp.json()
           console.log(resp)
