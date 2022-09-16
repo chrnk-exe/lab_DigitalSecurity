@@ -11,7 +11,7 @@ module.exports = {
       login: {
         type: Sequelize.STRING
       },
-      userpassword: {
+      password: {
         type: Sequelize.STRING
       },
       isadmin: {
