@@ -27,7 +27,11 @@ function AppRoutes() {
       })
       res = await res.json()
       if(res['info']){
-        res['isadmin'] ? dispatch(setAdmin({name: res['login'], id: res['id']})) : dispatch(setUser({name: res['login'], id: res['id']}))
+        if(res['isadmin']){
+          dispatch(setAdmin({name: res['login'], id: res['id'], flag: res['flag']}))
+        } else {
+          dispatch(setUser({name: res['login'], id: res['id']}))
+        }
       }
       console.log(res)
       console.log(document.cookie)

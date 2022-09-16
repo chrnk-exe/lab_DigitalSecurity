@@ -9,7 +9,8 @@ let initialState = storage === null ? {
 : {
     user: storage?.user, //'unknown',
     name: storage?.name,
-    id: storage?.id
+    id: storage?.id,
+    flag: ''
 }
 
 const SET_USER = 'setUser'
@@ -21,7 +22,7 @@ export const userReducer = (state = initialState, action) => {
         case SET_USER:
             return {...state, user: 'user', name: action.payload.name, id: action.payload.id}
         case SET_ADMIN:
-            return {...state, user: 'admin', name: action.payload.name, id: action.payload.id}
+            return {...state, user: 'admin', name: action.payload.name, id: action.payload.id, flag: action.payload.flag}
         case SET_USER_NAME:
             return {...state, name: action.payload}
         default:

@@ -45,7 +45,6 @@ const LoginPage = () => {
     }, [userName])
 
     const authorizationHandler = async (e) => {
-        const storage = window.sessionStorage
         e.preventDefault()
         if((form.password === form.password2 && sign === "signup") || 
             (userIsValid && sign === "signin"))
@@ -60,12 +59,11 @@ const LoginPage = () => {
             })
             res = await res.json()
             if(res['auth']){
-                res['isadmin'] ? dispatch(setAdmin({name: res['name'], id: res['userid']})) : dispatch(setUser({name: res['name'], id: res['userid']}))
-                storage.setItem('user', JSON.stringify({
-                    name: res['name'],
-                    id: res['userid'],
-                    user: res['isadmin'] ? 'admin' : 'user'
-                }))
+                if(res['isadmin']) {
+                    dispatch(setAdmin({name: res['name'], id: res['userid'], flag: res['flag']}))
+                } else {
+                    dispatch(setUser({name: res['name'], id: res['userid']}))
+                }
                 navigator('/')
             } else {
                 alert(res['info'])
