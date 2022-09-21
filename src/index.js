@@ -21,8 +21,8 @@ app.use(
         // Cookie Options
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
         httpOnly: false,
-        signed: false,
-        sameSite: 'none',
+        // signed: false,
+        sameSite: 'lax',
         secure: false,
     }),
 );
