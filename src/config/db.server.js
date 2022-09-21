@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path');
-const mypath = path.resolve(process.cwd(),'.env')
+const mypath = path.resolve(__dirname, '../../.env')
 require('dotenv').config({ path: mypath});
 
 // console.log(process.env.DB_PORT, mypath)
