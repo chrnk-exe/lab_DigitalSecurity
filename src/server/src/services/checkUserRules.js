@@ -1,25 +1,25 @@
-const {Users} = require('./models')
+const { Users } = require('./models');
 
-const checkUserRules = async (id) => {
-    let result
-    if(typeof id === 'string'){
+const checkUserRules = async id => {
+    let result;
+    if (typeof id === 'string') {
         result = await Users.findOne({
             where: {
-                login: id
-            }
-        })
-    } else if(typeof id === 'number'){
+                login: id,
+            },
+        });
+    } else if (typeof id === 'number') {
         result = await Users.findOne({
             where: {
-                id
-            }
-        })
+                id,
+            },
+        });
     }
     try {
-        return result.getDataValue('isadmin')
+        return result.getDataValue('isadmin');
     } catch {
-        return false
+        return false;
     }
-}
+};
 
-module.exports = checkUserRules
+module.exports = checkUserRules;

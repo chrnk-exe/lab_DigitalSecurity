@@ -1,18 +1,21 @@
-const {Users} = require('./models')
-const toPlain = require('./toPlain')
+const { Users } = require('./models');
+const toPlain = require('./toPlain');
 
 const renameUser = async (id, name) => {
-    await Users.update({login: name}, {
-        where: {
-            id
-        }
-    })
+    await Users.update(
+        { login: name },
+        {
+            where: {
+                id,
+            },
+        },
+    );
     const user = await Users.findAll({
-        where:{
-            login: name
-        }
-    }).then(toPlain)
-    return user[0].login == name
-}
+        where: {
+            login: name,
+        },
+    }).then(toPlain);
+    return user[0].login == name;
+};
 
-module.exports = renameUser
+module.exports = renameUser;

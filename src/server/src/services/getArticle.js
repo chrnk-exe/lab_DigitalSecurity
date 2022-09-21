@@ -1,13 +1,13 @@
-const { Articles } = require('./models')
-const toPlain = require('./toPlain')
+const { Articles } = require('./models');
+const toPlain = require('./toPlain');
 
-async function getArticle(id){
+async function getArticle(id) {
     const article = await Articles.findOne({
         where: {
-            id
-        }
-    }).then(toPlain)
-    return article
-} 
+            id,
+        },
+    }).then(toPlain);
+    return article;
+}
 
-module.exports = getArticle
+module.exports = getArticle;

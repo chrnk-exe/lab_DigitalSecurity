@@ -85,6 +85,7 @@ const SignIn = () => {
                 <Button
                     onClick={authorizationHandler}
                     variant={'contained'}
+                    id={'login_button'}
                     fullWidth>
                     Sign in
                 </Button>

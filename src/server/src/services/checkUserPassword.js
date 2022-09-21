@@ -1,14 +1,14 @@
-const { Users } = require('./models')
-const toPlain = require('./toPlain')
+const { Users } = require('./models');
+const toPlain = require('./toPlain');
 
-async function checkUserPassword(login, password){
+async function checkUserPassword(login, password) {
     const user = await Users.findOne({
         where: {
             login,
-            password
-        }
-    }).then(toPlain)
-    return user ? user : null
+            password,
+        },
+    }).then(toPlain);
+    return user ? user : null;
 }
 
-module.exports = checkUserPassword
+module.exports = checkUserPassword;

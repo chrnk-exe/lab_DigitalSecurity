@@ -1,37 +1,37 @@
-const {Articles, Comments, Users} = require('./models')
-const toPlain = require('./toPlain')
+const { Articles, Comments, Users } = require('./models');
+const toPlain = require('./toPlain');
 
-async function getComments(id){
-	const article = await Articles.findOne({
+async function getComments(id) {
+    const article = await Articles.findOne({
         where: {
-            id
+            id,
         },
-        attributes: ['comments']
-    }).then(toPlain)
+        attributes: ['comments'],
+    }).then(toPlain);
 
-	let commentsList = JSON.parse(article.comments)
-	if(commentsList.length > 0) {
+    let commentsList = JSON.parse(article.comments);
+    if (commentsList.length > 0) {
         const commentsPool = await Comments.findAll({
             where: {
-                id: commentsList
-            }
-        }).then(toPlain)
-        const useridComments = commentsPool.map(comment => comment.userid)
+                id: commentsList,
+            },
+        }).then(toPlain);
+        const useridComments = commentsPool.map(comment => comment.userid);
         const names = await Users.findAll({
             where: {
-                id: useridComments
-            }, 
-            attributes: ['id', 'login', 'isadmin']
-        }).then(toPlain)
+                id: useridComments,
+            },
+            attributes: ['id', 'login', 'isadmin'],
+        }).then(toPlain);
         const comments = commentsPool.map(comment => ({
-            name: names.find(name => name.id == comment.userid).login, 
+            name: names.find(name => name.id == comment.userid).login,
             isadmin: names.find(name => name.id == comment.userid).isadmin,
-            ...comment
-        }))
-        return comments
-	} else {
-		return []
-	}
+            ...comment,
+        }));
+        return comments;
+    } else {
+        return [];
+    }
 }
 
-module.exports = getComments
+module.exports = getComments;

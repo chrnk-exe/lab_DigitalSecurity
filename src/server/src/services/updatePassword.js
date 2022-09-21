@@ -1,22 +1,27 @@
-const {Users} = require('./models')
-const toPlain = require('./toPlain')
+const { Users } = require('./models');
+const toPlain = require('./toPlain');
 
 const updatePassword = async (login, newPassword) => {
-    await Users.update({password: newPassword}, {
-        where: {
-            login
-        }
-    })
+    await Users.update(
+        {
+            password: newPassword,
+        },
+        {
+            where: {
+                login,
+            },
+        },
+    );
     const user = await Users.findAll({
         where: {
-            login
-        }
-    }).then(toPlain)
+            login,
+        },
+    }).then(toPlain);
     try {
-        return user[0].password == newPassword
+        return user[0].password == newPassword;
     } catch {
-        return false
+        return false;
     }
-}
+};
 
-module.exports = updatePassword
+module.exports = updatePassword;
