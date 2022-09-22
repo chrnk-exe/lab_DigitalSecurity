@@ -28,12 +28,19 @@ app.use(
 );
 
 app.use(express.static(path.resolve(__dirname, '../../../build')));
+// app.use((req, res, next) => {
+//     console.log(req.url)
+//     next()
+// })
+// app.use(express.static(path.resolve(__dirname, '../../../local')));
+
 
 app.use(public);
 app.use('/api', authController, private);
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../../../build', 'index.html'));
+    // res.sendFile(path.resolve(__dirname, '../../../local', 'index.html'));
 });
 
 app.listen(port, () => {

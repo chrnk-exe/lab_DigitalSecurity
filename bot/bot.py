@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 import os
 import traceback
 import time
@@ -21,19 +22,21 @@ def auth(browser, route, logininfo, passwordinfo, buttonid):
 
 
 try: 
-    options = webdriver.ChromeOptions()
-    # options.add_argument('--headless')
+    options = Options()
+    options.headless = True
     # options.add_argument("--disable-setuid-sandbox")
     # options.add_argument('--no-sandbox')
-    # browser = webdriver.Chrome(options=options)
-    browser = webdriver.Chrome(executable_path='./driver/chromedriver')
-    auth(
+    browser = webdriver.Chrome(options=options, executable_path='./driver/chromedriver')
+    # browser = webdriver.Chrome(executable_path='./driver/chromedriver')
+    browser = auth(
         browser, 
         '/login/signin', 
         [':r0:', 'admin'], 
         [':r1:', '1234567qwe'], 
         'login_button'
     )
+    browser.get(f"http://{host}")
+    time.sleep(5)
     maxArticles = len(browser.find_elements(By.TAG_NAME, 'article'))
     try:
         while True:
