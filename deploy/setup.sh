@@ -15,16 +15,40 @@ sudo docker-compose up -d;
 sudo apt install nodejs
 # install npm
 sudo apt install npm
-
-# install git
-sudo apt-get install git
-# download app
-mkdir -p server
-git clone -b server https://github.com/chrnk-exe/lab_DigitalSecurity.git ./server
 # install pm2
 sudo npm install -g pm2
+# install git
+sudo apt-get install git
+# install python
+sudo apt-get install python
+sudo apt install python3-venv
+sudo apt install pip
+
+# install chrome
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install -y ./google-chrome-stable_current_amd64.deb
+rm ./google-chrome-stable_current_amd64.deb
+
+# install chrome driver
+wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+unzip chromedriver_linux64.zip
+sudo mv chromedriver /usr/bin/chromedriver
+sudo chown root:root /usr/bin/chromedriver
+sudo chmod +x /usr/bin/chromedriver
+
+# download app
+mkdir -p App
+git clone https://github.com/chrnk-exe/lab_DigitalSecurity.git ./App
+cd App
+# start bot
+cd bot
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+pm2 start bot.py
+cd ..
 # install dependencies
-cd server
+cd src/server
 npm install
 # initial DB
 npm run migrate
