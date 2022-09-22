@@ -2,15 +2,19 @@
 /node_modules
 /.pnp
 .pnp.js
-
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# config
 .env
 .prettierrc
+
+# scripts
 mv.sh
 
+# python bot dependencies
 venv/
 geckodriver
 geckodriver.log

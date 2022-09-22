@@ -1,0 +1,21 @@
+{
+  "name": "digitalsecurity_lab",
+  "version": "1.0.0",
+  "description": "В данной работе были рассмотрены уязвимости библиотеки React (XSS через dangerousInnerHtmk) и уязвимость серверной части приложения на Node.js Prototype Pollution",
+  "main": "-",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd bot && python3 bot.py",
+    "start-bot": "cd bot/venv/bin && sudo ./activate.csh && pip install -r requirements.txt && python3 bot.py"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrnk-exe/lab_DigitalSecurity.git"
+  },
+  "author": "chrnk-exe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrnk-exe/lab_DigitalSecurity/issues"
+  },
+  "homepage": "https://github.com/chrnk-exe/lab_DigitalSecurity#readme"
+}
