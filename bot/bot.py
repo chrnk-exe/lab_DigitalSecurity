@@ -5,7 +5,7 @@ import traceback
 import time
 
 cwd = os.getcwd()
-os.environ['PATH'] = os.environ["PATH"] + ':' + cwd
+os.environ['PATH'] = os.environ["PATH"] + ':' + cwd + '/driver'
 host = "localhost:5000"
 
 def go_routes(routes, browser):
@@ -21,12 +21,19 @@ def auth(browser, route, logininfo, passwordinfo, buttonid):
 
 
 try: 
-    options = webdriver.FirefoxOptions()
-    options.add_argument('--headless')
-    options.add_argument("--disable-setuid-sandbox")
-    options.add_argument('--no-sandbox')
-    browser = webdriver.Firefox(options=options)
-    auth(browser, '/login/signin', [':r0:', 'admin'], [':r1:', '1234567qwe'], 'login_button')
+    options = webdriver.ChromeOptions()
+    # options.add_argument('--headless')
+    # options.add_argument("--disable-setuid-sandbox")
+    # options.add_argument('--no-sandbox')
+    # browser = webdriver.Chrome(options=options)
+    browser = webdriver.Chrome(executable_path='./driver/chromedriver')
+    auth(
+        browser, 
+        '/login/signin', 
+        [':r0:', 'admin'], 
+        [':r1:', '1234567qwe'], 
+        'login_button'
+    )
     maxArticles = len(browser.find_elements(By.TAG_NAME, 'article'))
     try:
         while True:
@@ -34,13 +41,13 @@ try:
             time.sleep(15)
     except Exception as e:
         print(traceback.format_exc())
-        os.environ['PATH'] = os.environ["PATH"][:-(len(cwd)+1)]
+        os.environ['PATH'] = os.environ["PATH"][:-(len(cwd + '/driver')+1)]
         exit(0)
 
 
 except Exception as e:
     print(traceback.format_exc())
-    os.environ['PATH'] = os.environ["PATH"][:-(len(cwd)+1)]
+    os.environ['PATH'] = os.environ["PATH"][:-(len(cwd + '/driver')+1)]
     exit(0)
 
 os.environ['PATH'] = os.environ["PATH"][:-(len(cwd)+1)]
