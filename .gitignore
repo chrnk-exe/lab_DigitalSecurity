@@ -20,5 +20,5 @@ src/client/build
 
 # python bot dependencies
 venv/
-geckodriver
+# geckodriver
 geckodriver.log
