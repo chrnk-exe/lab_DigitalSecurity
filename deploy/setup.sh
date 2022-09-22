@@ -22,7 +22,7 @@ sudo apt-get install git
 # install python
 sudo apt-get install python
 sudo apt install python3-venv
-sudo apt install pip
+sudo apt install python3-pip
 
 # install chrome
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -44,7 +44,7 @@ cd App
 cd bot
 python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 pm2 start bot.py
 cd ..
 # install dependencies
