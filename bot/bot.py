@@ -7,10 +7,11 @@ import time
 
 cwd = os.getcwd()
 os.environ['PATH'] = os.environ["PATH"] + ':' + cwd + '/driver'
-host = "localhost:5000"
+host = "62.84.113.204"
 
 def go_routes(routes, browser):
     for i in range(routes):
+        print(f'On the route: {f"http://{host}/posts/{i+1}"}')
         browser.get(f"http://{host}/posts/{i+1}")
 
 def auth(browser, route, logininfo, passwordinfo, buttonid):
