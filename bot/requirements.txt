@@ -2,7 +2,7 @@
 async-generator==1.10
 attrs==22.1.0
 blinker==1.4
-Brlapi==0.8.3
+# Brlapi==0.8.3
 certifi==2022.9.14
 chardet==4.0.0
 chrome-gnome-shell==0.0.0
