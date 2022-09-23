@@ -36,6 +36,9 @@ sudo mv chromedriver /usr/bin/chromedriver
 sudo chown root:root /usr/bin/chromedriver
 sudo chmod +x /usr/bin/chromedriver
 
+# install virual display
+sudo apt-get install xvfb
+
 # download app
 mkdir -p App
 git clone https://github.com/chrnk-exe/lab_DigitalSecurity.git ./App
