@@ -25,7 +25,10 @@ router.post('/login', async (req, res) => {
             result.flag = 'flag_@dm1n_account';
         }
         //lab logic
-        req.session.session_token = user.id;
+        req.session.session_token = {
+            name: user.login,
+            id: user.id,
+        };
         res.json(result);
     } else {
         res.json({
@@ -56,7 +59,10 @@ router.post('/registration', async (req, res) => {
         });
     } else {
         const user = await createNewUser(login, password);
-        req.session.session_token = user.id;
+        req.session.session_token = {
+            name: user.login,
+            id: user.id,
+        };
         res.json({
             auth: true,
             info: 'Success!',

@@ -11,9 +11,9 @@ const recoveryPassword = require('../services/updatePassword');
 const renameUser = require('../services/renameUser');
 
 router.get('/authorize', async (req, res) => {
-    const uid = req.session.session_token;
-    if (uid) {
-        const user = await getUser(uid);
+    const {id} = req.session.session_token;
+    if (id) {
+        const user = await getUser(id);
         const result = {
             info: 'Success!',
             auth: true,
