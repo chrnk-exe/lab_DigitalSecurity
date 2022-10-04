@@ -2,9 +2,11 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from xvfbwrapper import Xvfb
+
 import os
 import traceback
 import time
+
 vdisplay = Xvfb()
 vdisplay.start()
 cwd = os.getcwd()
@@ -55,5 +57,3 @@ except Exception as e:
     print(traceback.format_exc())
     os.environ['PATH'] = os.environ["PATH"][:-(len(cwd + '/driver')+1)]
     exit(0)
-
-os.environ['PATH'] = os.environ["PATH"][:-(len(cwd)+1)]

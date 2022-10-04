@@ -43,13 +43,6 @@ sudo apt-get install xvfb
 mkdir -p App
 git clone https://github.com/chrnk-exe/lab_DigitalSecurity.git ./App
 cd App
-# start bot
-cd bot
-python3 -m venv venv
-source venv/bin/activate
-pip3 install -r requirements.txt
-pm2 start bot.py
-cd ..
 # install dependencies
 cd src/server
 npm install
@@ -57,6 +50,19 @@ npm install
 npm run migrate
 #-startpm2
 npm run startpm2
+cd .. && cd ..
+# start bot
+cd bot
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+pm2 start bot.py
+cd ..
+# pm2 on restart
+str=$(pm2 startup)
+var1=${str:102}
+eval $var1
+pm2 save
 
 # clear history
 history -c
