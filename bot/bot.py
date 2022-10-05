@@ -1,6 +1,11 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
+
 from xvfbwrapper import Xvfb
 
 import os
@@ -11,15 +16,26 @@ vdisplay = Xvfb()
 vdisplay.start()
 cwd = os.getcwd()
 os.environ['PATH'] = os.environ["PATH"] + ':' + cwd + '/driver'
+# host = "hacktory.lab"
 host = "62.84.113.204"
 
 def go_routes(routes, browser):
     for i in range(routes):
-        # print(f'On the route: {f"http://{host}/posts/{i+1}"}')
+        print(f'On the route: {f"http://{host}/posts/{i+1}"}')
         browser.get(f"http://{host}/posts/{i+1}")
+        try:
+            WebDriverWait(browser, 1.5).until(EC.alert_is_present())
+            alert = browser.switch_to.alert
+            alert.accept()
+            print('alert accepted')
+        except TimeoutException:
+            print('alert not accepted')
+            pass
+        time.sleep(1)
 
 def auth(browser, route, logininfo, passwordinfo, buttonid):
     browser.get(f"http://{host}{route}")
+    time.sleep(5)
     browser.find_element(By.ID, logininfo[0]).send_keys(logininfo[1])
     browser.find_element(By.ID, passwordinfo[0]).send_keys(passwordinfo[1])
     browser.find_element(By.ID, buttonid).click()
