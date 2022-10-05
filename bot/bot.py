@@ -16,8 +16,8 @@ vdisplay = Xvfb()
 vdisplay.start()
 cwd = os.getcwd()
 os.environ['PATH'] = os.environ["PATH"] + ':' + cwd + '/driver'
-# host = "hacktory.lab"
-host = "62.84.113.204"
+host = "hacktory.lab"
+# host = "62.84.113.204"
 
 def go_routes(routes, browser):
     for i in range(routes):
