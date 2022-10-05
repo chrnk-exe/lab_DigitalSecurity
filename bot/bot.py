@@ -17,8 +17,8 @@ import time
 
 cwd = os.getcwd()
 os.environ['PATH'] = os.environ["PATH"] + ':' + cwd + '/driver'
-host = "hacktory.lab"
-# host = "62.84.113.204"
+# host = "hacktory.lab"
+host = "62.84.113.204"
 
 def go_routes(routes, browser):
     for i in range(routes):
@@ -46,6 +46,7 @@ def auth(browser, route, logininfo, passwordinfo, buttonid):
 try: 
     options = Options()
     options.headless = True
+    options.add_argument("--no-sandbox")
     browser = webdriver.Chrome(options=options, executable_path='./driver/chromedriver')
     browser = auth(
         browser, 
