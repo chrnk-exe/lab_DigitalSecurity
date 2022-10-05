@@ -6,14 +6,15 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
-from xvfbwrapper import Xvfb
+# from xvfbwrapper import Xvfb
 
 import os
 import traceback
 import time
 
-vdisplay = Xvfb()
-vdisplay.start()
+# vdisplay = Xvfb()
+# vdisplay.start()
+
 cwd = os.getcwd()
 os.environ['PATH'] = os.environ["PATH"] + ':' + cwd + '/driver'
 host = "hacktory.lab"
@@ -45,10 +46,7 @@ def auth(browser, route, logininfo, passwordinfo, buttonid):
 try: 
     options = Options()
     options.headless = True
-    # options.add_argument("--disable-setuid-sandbox")
-    # options.add_argument('--no-sandbox')
     browser = webdriver.Chrome(options=options, executable_path='./driver/chromedriver')
-    # browser = webdriver.Chrome(executable_path='./driver/chromedriver')
     browser = auth(
         browser, 
         '/login/signin', 
