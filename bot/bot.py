@@ -1,41 +1,41 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
-# from xvfbwrapper import Xvfb
+from xvfbwrapper import Xvfb
 
 import os
 import traceback
 import time
+from datetime import datetime
 
-# vdisplay = Xvfb()
-# vdisplay.start()
+vdisplay = Xvfb()
+vdisplay.start()
 
 cwd = os.getcwd()
 os.environ['PATH'] = os.environ["PATH"] + ':' + cwd + '/driver'
-# host = "hacktory.lab"
-host = "62.84.113.204"
+host = "hacktory.lab"
+# host = "62.84.113.204"
 
 def go_routes(routes, browser):
     for i in range(routes):
-        print(f'On the route: {f"http://{host}/posts/{i+1}"}')
         browser.get(f"http://{host}/posts/{i+1}")
         try:
             WebDriverWait(browser, 1.5).until(EC.alert_is_present())
             alert = browser.switch_to.alert
             alert.accept()
-            print('alert accepted')
         except TimeoutException:
-            print('alert not accepted')
             pass
         time.sleep(1)
 
 def auth(browser, route, logininfo, passwordinfo, buttonid):
+    start_time = datetime.now()
     browser.get(f"http://{host}{route}")
+    print('time: ', datetime.now() - start_time)
     time.sleep(5)
     browser.find_element(By.ID, logininfo[0]).send_keys(logininfo[1])
     browser.find_element(By.ID, passwordinfo[0]).send_keys(passwordinfo[1])
@@ -47,7 +47,8 @@ try:
     options = Options()
     options.headless = True
     options.add_argument("--no-sandbox")
-    browser = webdriver.Chrome(options=options, executable_path='./driver/chromedriver')
+    s = Service('./driver/chromedriver')
+    browser = webdriver.Chrome(service=s, options=options)
     browser = auth(
         browser, 
         '/login/signin', 

@@ -1,5 +1,6 @@
 .CommentItem {
     width: 85%;
+    position: relative;
     margin-top: 15px ;
     background-color: gainsboro;
     display: flex;
@@ -17,5 +18,12 @@
 }
 
 .content {
-    margin-left: 15px;
+   margin-left: 15px;
+}
+
+.deleteButton {
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 5px;
 }

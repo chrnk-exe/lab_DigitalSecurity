@@ -9,9 +9,10 @@ const checkUserName = require('../services/checkUserName');
 const getUser = require('../services/getUser');
 const recoveryPassword = require('../services/updatePassword');
 const renameUser = require('../services/renameUser');
+const deleteComment = require('../services/deleteComment');
 
 router.get('/authorize', async (req, res) => {
-    const {id} = req.session.session_token;
+    const { id } = req.session.session_token;
     if (id) {
         const user = await getUser(id);
         const result = {
@@ -69,6 +70,16 @@ router.post('/recovery', async function (req, res) {
     } else {
         const resp = await recoveryPassword(name, password);
         res.json({ password_changed: resp });
+    }
+});
+
+router.post('/delete_comment', async function (req, res) {
+    const { commentid, articleid } = req.body;
+    const deleted = await deleteComment(commentid, articleid);
+    if (deleted) {
+        res.json({ deleted: true });
+    } else {
+        res.json({ delete: false });
     }
 });
 

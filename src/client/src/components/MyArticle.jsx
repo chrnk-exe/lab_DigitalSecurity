@@ -61,7 +61,7 @@ const MyArticle = () => {
     useEffect(() => {
         const fetchData = async id => {
             let resp = await fetch(`http://${host}/posts?id=${id}`, {
-              credentials: 'include',
+                credentials: 'include',
             });
             if (resp.status === 200) {
                 resp = await resp.json();
@@ -131,6 +131,7 @@ const MyArticle = () => {
                                 comments.map((comment, index) => (
                                     <CommentItem
                                         key={index}
+                                        id={comment.id}
                                         name={comment.name}
                                         email={comment.email}
                                         body={comment.body}
