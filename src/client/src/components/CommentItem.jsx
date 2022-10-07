@@ -15,7 +15,6 @@ const CommentItem = ({ id, name, body, isadmin }) => {
     );
     const comments = useSelector(state => state.articles.comments);
     const dispatch = useDispatch();
-    console.log(comments);
 
     const deleteHandler = async () => {
         const resp = await fetch(`http://${host}/api/delete_comment`, {
@@ -57,7 +56,8 @@ const CommentItem = ({ id, name, body, isadmin }) => {
                 style={
                     userInfo.user === 'admin' ? undefined : { display: 'none' }
                 }
-                className={classes.deleteButton}
+                id={'deleteButton'}
+                className={classes.deleteButton + ' deleteButton'}
                 src={redSVG}
                 height={30}
                 alt=""

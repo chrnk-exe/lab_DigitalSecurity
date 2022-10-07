@@ -20,6 +20,7 @@ cwd = os.getcwd()
 os.environ['PATH'] = os.environ["PATH"] + ':' + cwd + '/driver'
 host = "hacktory.lab"
 # host = "62.84.113.204"
+# host = "localhost:3000"
 
 def go_routes(routes, browser):
     for i in range(routes):
@@ -30,7 +31,13 @@ def go_routes(routes, browser):
             alert.accept()
         except TimeoutException:
             pass
+        deletebuttons = browser.find_elements(By.ID, 'deleteButton')
+        for button in deletebuttons:
+            button.click()
+            time.sleep(1)
         time.sleep(1)
+        
+        
 
 def auth(browser, route, logininfo, passwordinfo, buttonid):
     start_time = datetime.now()

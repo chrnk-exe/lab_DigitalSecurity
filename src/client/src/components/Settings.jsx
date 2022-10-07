@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { Navigate, useNavigate } from 'react-router';
+import { Navigate } from 'react-router';
 import classes from '../styles/Settings.module.css';
 import adminPic from '../assets/admin.jpg';
 import userPic from '../assets/user.jpg';
@@ -22,7 +22,6 @@ const Settings = () => {
     });
     const [nameIsValid, setNameValid] = useState(true);
     const debouncedUsername = useDebounce(form.username, 350);
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
